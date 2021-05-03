@@ -87,12 +87,10 @@ public class MainMenu {
         gbc.weighty = 1.0;
         panel1.add(exitButton, gbc);
     }
-
     /**
      * @noinspection ALL
      */
     public JComponent $$$getRootComponent$$$() {
         return panel1;
     }
-
 }
