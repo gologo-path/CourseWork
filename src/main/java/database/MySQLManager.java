@@ -67,4 +67,26 @@ public class MySQLManager {
         return null;
     }
 
+    public ArrayList<Book> getBooks() throws SQLException {
+        Connection conn = null;
+        try{
+            conn = openConnection();
+            conn.setAutoCommit(false);
+            ArrayList<Book> books = new ArrayList<Book>();
+            Statement stm = conn.createStatement();
+            ResultSet rs = stm.executeQuery("SELECT isbn, book.name AS name, year, publisher.name AS publisher, language, annotation, location FROM (book INNER JOIN publisher ON book.id_publisher = publisher.id) INNER JOIN LANGUAGE ON book.id_language;");
+            while (rs.next()){
+                books.add(new Book(rs.getString("isbn"),rs.getString("name"), rs.getString("year"),rs.getString("language"),rs.getString("publisher"),rs.getString("location"),rs.getString("annotation")));
+            }
+            rs.close();
+            stm.close();
+            return books;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            conn.close();
+        }
+        return null;
+    }
+
 }

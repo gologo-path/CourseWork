@@ -4,12 +4,14 @@ import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
 import database.MySQLManager;
+import entities.Book;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class SearchForm {
     private MySQLManager manager;
@@ -25,7 +27,17 @@ public class SearchForm {
         manager = new MySQLManager();
         searchButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // TODO: 03.05.2021 interacting with SQLManager, some versions of requests
+                try {
+                    for (Book book : manager.getBooks()) {
+                        BookItem item = new BookItem(book);
+                        resultPanel.add(item.$$$getRootComponent$$$());
+                    }
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+                panel1.setVisible(false);
+                panel1.setVisible(true);
+
             }
         });
         this.setGenreList();
@@ -99,7 +111,7 @@ public class SearchForm {
         genre.setModel(defaultComboBoxModel3);
         panel3.add(genre, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         resultPanel = new JPanel();
-        resultPanel.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
+        resultPanel.setLayout(new BorderLayout(0, 0));
         panel1.add(resultPanel, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final Spacer spacer1 = new Spacer();
         panel1.add(spacer1, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));

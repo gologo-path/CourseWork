@@ -5,14 +5,14 @@ import java.io.Serializable;
 public class Book implements Serializable {
     protected String isbn;
     protected String name;
-    protected int year;
+    protected String year;
     protected String language;
     protected String publisher;
     protected String location;
     protected String annotation;
     protected String[] genres;
 
-    Book(String isbn, String name, int year, String language,String publisher,String location,String annotation){
+    public Book(String isbn, String name, String year, String language, String publisher, String location, String annotation){
         this.isbn = isbn;
         this.name = name;
         this.year = year;
@@ -37,13 +37,14 @@ public class Book implements Serializable {
         return name;
     }
 
-    public void setYear(int year) {
+    public void setYear(String year) {
         this.year = year;
     }
 
-    public int getYear() {
+    public String getYear() {
         return year;
     }
+
     public void setLanguage(String language) {
         this.language = language;
     }
