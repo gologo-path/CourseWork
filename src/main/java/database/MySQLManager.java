@@ -8,10 +8,10 @@ import java.util.List;
 
 public class MySQLManager {
     private Connection openConnection(){
-        String driver = "org.mysql.Driver";
-        String connectionString = "jdbc:mysql://localhost:3306/lib";
-        String username = "";
-        String password = "";
+        String driver = "com.mysql.jdbc.Driver";
+        String connectionString = "jdbc:mysql://localhost:3306/lib?useUnicode=true&serverTimezone=UTC&useSSL=false&verifyServerCertificate=false";
+        String username = "libr";
+        String password = "libr";
         try{
             Class.forName(driver);
             return DriverManager.getConnection(connectionString,username,password);

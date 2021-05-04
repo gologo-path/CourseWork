@@ -3,13 +3,16 @@ package GUI;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
+import database.MySQLManager;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 public class SearchForm {
+    private MySQLManager manager;
     private JPanel panel1;
     private JTextField textField1;
     private JComboBox comboBox1;
@@ -19,20 +22,34 @@ public class SearchForm {
     private JPanel resultPanel;
 
     public SearchForm() {
+        manager = new MySQLManager();
         searchButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // TODO: 03.05.2021 interacting with SQLManager, some versions of requests
             }
         });
-
+        this.setGenreList();
+        this.setLanguageList();
     }
 
     private void setGenreList() {
-        // TODO: 03.05.2021 Interact with SQLManager to get list of genres and pushing it to JComboBox genre
+        try {
+            for (String genre : this.manager.getGenres()) {
+                this.genre.addItem(genre);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
-    private void SetLanguageList() {
-        // TODO: 03.05.2021 Interact with SQLManager to get list of languages and pushing it to JComboBox language
+    private void setLanguageList() {
+        try {
+            for (String language : this.manager.getLanguages()) {
+                this.language.addItem(language);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
     {

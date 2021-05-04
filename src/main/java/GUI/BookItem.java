@@ -3,7 +3,7 @@ package GUI;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
-import tmp.Book;
+import entities.Book;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,18 +21,19 @@ public class BookItem {
     private JButton button1;
 
     public BookItem(Book book) {
-        name.setText(book.name);
-        isbn.setText(book.isbn);
-        year.setText(book.year);
-        publisher.setText(book.publisher);
-        genre.setText(book.genre);
-        annotation.setText(book.annotation);
+        name.setText(book.getName());
+        isbn.setText(book.getIsbn());
+        year.setText(String.valueOf(book.getYear()));
+        publisher.setText(book.getPublisher());
+        //genre.setText(book.genre);
+        annotation.setText(book.getAnnotation());
     }
 
-    public void setNameButton(String name){
+    public void setNameButton(String name) {
         button1.setText(name);
     }
-    public void setActionListener(ActionListener listener){
+
+    public void setActionListener(ActionListener listener) {
         button1.addActionListener(listener);
     }
 
@@ -94,6 +95,9 @@ public class BookItem {
         panel2.add(isbn, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final Spacer spacer1 = new Spacer();
         panel1.add(spacer1, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        button1 = new JButton();
+        button1.setText("Button");
+        panel1.add(button1, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**
@@ -102,4 +106,5 @@ public class BookItem {
     public JComponent $$$getRootComponent$$$() {
         return panel1;
     }
+
 }

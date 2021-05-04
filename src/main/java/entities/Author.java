@@ -7,10 +7,10 @@ public class Author implements Serializable {
         protected String name;
         protected String surname;
         protected String fathers;
-        protected char id_a;
+        protected int id_a;
 
 
-        Author(char id_a, String name, String surname,String fathers){
+        Author(int id_a, String name, String surname,String fathers){
             this.id_a = id_a;
             this.name = name;
             this.surname = surname;
@@ -37,11 +37,11 @@ public class Author implements Serializable {
         public String getFathers() {
             return fathers;
         }
-        public void setId_a(char id_a) {
+        public void setId_a(int id_a) {
             this.id_a = id_a;
         }
 
-        public char getId_a() {
+        public int getId_a() {
             return id_a;
         }
 }

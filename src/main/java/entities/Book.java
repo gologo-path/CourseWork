@@ -3,16 +3,17 @@ package entities;
 import java.io.Serializable;
 
 public class Book implements Serializable {
-    protected char id_b;
+    protected String isbn;
     protected String name;
     protected int year;
     protected String language;
     protected String publisher;
     protected String location;
     protected String annotation;
+    protected String[] genres;
 
-    Book(char id_b, String name, int year, String language,String publisher,String location,String annotation){
-        this.id_b = id_b;
+    Book(String isbn, String name, int year, String language,String publisher,String location,String annotation){
+        this.isbn = isbn;
         this.name = name;
         this.year = year;
         this.language = language;
@@ -21,12 +22,12 @@ public class Book implements Serializable {
         this.annotation = annotation;
     }
 
-    public void setId_b(char id_b) {
-        this.id_b = id_b;
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
     }
 
-    public char getId_b() {
-        return id_b;
+    public String getIsbn() {
+        return isbn;
     }
     public void setName(String name) {
         this.name = name;
@@ -70,5 +71,13 @@ public class Book implements Serializable {
 
     public String getAnnotation() {
         return annotation;
+    }
+
+    public void setGenres(String[] genres) {
+        this.genres = genres;
+    }
+
+    public String[] getGenres() {
+        return genres;
     }
 }
