@@ -1,6 +1,6 @@
 package database;
 
-import tmp.Book;
+import entities.Book;
 
 import java.sql.*;
 import java.util.ArrayList;
