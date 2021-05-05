@@ -10,7 +10,7 @@ public class Book implements Serializable {
     protected String publisher;
     protected String location;
     protected String annotation;
-    protected String[] genres;
+    protected String genres;
 
     public Book(String isbn, String name, String year, String language, String publisher, String location, String annotation){
         this.isbn = isbn;
@@ -74,11 +74,11 @@ public class Book implements Serializable {
         return annotation;
     }
 
-    public void setGenres(String[] genres) {
+    public void setGenres(String genres) {
         this.genres = genres;
     }
 
-    public String[] getGenres() {
+    public String getGenres() {
         return genres;
     }
 }
