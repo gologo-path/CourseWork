@@ -4,7 +4,6 @@ import entities.Book;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
 
 public class MySQLManager {
     private Connection openConnection(){
@@ -78,6 +77,7 @@ public class MySQLManager {
             while (rs.next()){
                 Book b = new Book(rs.getString("isbn"),rs.getString("name"), rs.getString("year"),rs.getString("language"),rs.getString("publisher"),rs.getString("location"),rs.getString("annotation"));
                 b.setGenres(this.getGenresByIsbn(rs.getString("isbn")));
+                b.setAuthors(this.getAuthorsByIsbn(rs.getString("isbn")));
                 books.add(b);
             }
             rs.close();
@@ -111,5 +111,50 @@ public class MySQLManager {
             conn.close();
         }
         return null;
+    }
+    private String getAuthorsByIsbn(String isbn) throws SQLException {
+        Connection conn = null;
+        try{
+            conn = openConnection();
+            conn.setAutoCommit(false);
+            String genres = "";
+            Statement stm = conn.createStatement();
+            ResultSet rs = stm.executeQuery("SELECT CONCAT(LEFT(NAME,1),'. ',IF(fathers IS NULL,'',CONCAT(LEFT(fathers,1),'. ')), surname) AS FIO FROM author_book INNER JOIN author ON author_book.id_a = author.id WHERE id_b = '"+isbn+"'");
+            while (rs.next()){
+                genres += rs.getString("FIO") + " ";
+            }
+            rs.close();
+            stm.close();
+            return genres;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            conn.close();
+        }
+        return null;
+    }
+    public ArrayList<Book> getBooksByAuthor(String author) throws SQLException {
+        Connection conn = null;
+        try{
+            conn = openConnection();
+            conn.setAutoCommit(false);
+            ArrayList<Book> books = new ArrayList<Book>();
+            Statement stm = conn.createStatement();
+            ResultSet rs = stm.executeQuery("SELECT isbn, book.name AS name, year, publisher.name AS publisher, language, annotation, location FROM (book INNER JOIN publisher ON book.id_publisher = publisher.id) INNER JOIN LANGUAGE ON book.id_language;");
+            while (rs.next()){
+                Book b = new Book(rs.getString("isbn"),rs.getString("name"), rs.getString("year"),rs.getString("language"),rs.getString("publisher"),rs.getString("location"),rs.getString("annotation"));
+                b.setGenres(this.getGenresByIsbn(rs.getString("isbn")));
+                books.add(b);
+            }
+            rs.close();
+            stm.close();
+            return books;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            conn.close();
+        }
+        return null;
+        // TODO: 05.05.2021 change request
     }
 }
