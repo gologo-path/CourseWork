@@ -25,18 +25,19 @@ public class SearchForm {
 
     public SearchForm() {
         manager = new MySQLManager();
+        resultPanel.setLayout(new GridLayout(0, 1, 0, 20));
         searchButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
-                    for (Book book : manager.getBooks()) {
+                    ArrayList<Book> books = manager.getBooks();
+                    for (Book book : books) {
                         BookItem item = new BookItem(book);
                         resultPanel.add(item.$$$getRootComponent$$$());
                     }
                 } catch (SQLException throwables) {
                     throwables.printStackTrace();
                 }
-                panel1.setVisible(false);
-                panel1.setVisible(true);
+                panel1.updateUI();
 
             }
         });
@@ -111,7 +112,7 @@ public class SearchForm {
         genre.setModel(defaultComboBoxModel3);
         panel3.add(genre, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         resultPanel = new JPanel();
-        resultPanel.setLayout(new BorderLayout(0, 0));
+        resultPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
         panel1.add(resultPanel, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final Spacer spacer1 = new Spacer();
         panel1.add(spacer1, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
