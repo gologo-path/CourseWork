@@ -28,14 +28,17 @@ public class SearchForm {
         resultPanel.setLayout(new GridLayout(0, 1, 0, 20));
         searchButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                try {
-                    ArrayList<Book> books = manager.getBooks();
-                    for (Book book : books) {
-                        BookItem item = new BookItem(book);
-                        resultPanel.add(item.$$$getRootComponent$$$());
+                resultPanel.removeAll();
+                if (textField1.getText().equals("")) {
+                    try {
+                        ArrayList<Book> books = manager.getBooks();
+                        for (Book book : books) {
+                            BookItem item = new BookItem(book);
+                            resultPanel.add(item.$$$getRootComponent$$$());
+                        }
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
                     }
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
                 }
                 panel1.updateUI();
             }
