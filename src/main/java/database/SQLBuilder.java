@@ -9,7 +9,7 @@ public class SQLBuilder {
 
     public SQLBuilder(String by, String language, String genre, String search){
 
-        SQL += "SELECT isbn, book.name AS name, year, publisher.name AS publisher, language, annotation, location FROM (book INNER JOIN publisher ON book.id_publisher = publisher.id) INNER JOIN language ON book.id_language ";
+        SQL += "SELECT isbn, book.name AS name, year, publisher.name AS publisher, language, annotation, location FROM (book INNER JOIN publisher ON book.id_publisher = publisher.id) INNER JOIN language ON book.id_language = language.id ";
         if (by.equals("By name")){
             if (!search.equals("")){
                 search+="%";
@@ -18,7 +18,7 @@ public class SQLBuilder {
         }else if (by.equals("By author")){
             SQL = "SELECT book.isbn, book.name AS NAME, YEAR, publisher.name AS publisher, LANGUAGE, annotation, location FROM ((book INNER JOIN \n" +
                     "(SELECT id_a,id_b FROM author_book INNER JOIN author ON author.id = author_book.id_a WHERE author.surname LIKE '%"+search+"%') AS auth\n" +
-                    "ON book.isbn = auth.id_b) INNER JOIN publisher ON book.id_publisher = publisher.id) INNER JOIN LANGUAGE ON book.id_language ";
+                    "ON book.isbn = auth.id_b) INNER JOIN publisher ON book.id_publisher = publisher.id) INNER JOIN LANGUAGE ON book.id_language = language.id WHERE 1=1 ";
         }else if (by.equals("By publisher")){
             if (!search.equals("")){
                 search+="%";
@@ -26,6 +26,9 @@ public class SQLBuilder {
             SQL += "WHERE publisher.name LIKE '%"+search+"' ";
         }else if (by.equals("By ISBN")){
             SQL += "WHERE book.isbn = '"+search+"' ";
+        }
+        if(!genre.equals("Any genre")){
+            SQL += "AND book.isbn IN (SELECT id_b FROM book_genre INNER JOIN genre ON book_genre.id_g = genre.id WHERE genre.genre = '"+genre+"') ";
         }
         if(!language.equals("Any language")){
             SQL+= "AND language = '"+language+"' ";
