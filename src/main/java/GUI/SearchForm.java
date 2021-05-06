@@ -4,6 +4,7 @@ import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
 import database.MySQLManager;
+import database.SQLBuilder;
 import entities.Book;
 
 import javax.swing.*;
@@ -29,9 +30,10 @@ public class SearchForm {
         searchButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 resultPanel.removeAll();
-                if (textField1.getText().equals("")) {
+                //if (textField1.getText().equals("")) {
                     try {
-                        ArrayList<Book> books = manager.getBooks();
+                        ArrayList<Book> books = manager.getByRequest(new SQLBuilder((String) comboBox1.getSelectedItem(), (String) language.getSelectedItem(), (String) genre.getSelectedItem(), textField1.getText()).getSQL());
+                        System.out.println(books.size());
                         for (Book book : books) {
                             BookItem item = new BookItem(book);
                             resultPanel.add(item.$$$getRootComponent$$$());
@@ -39,7 +41,7 @@ public class SearchForm {
                     } catch (SQLException throwables) {
                         throwables.printStackTrace();
                     }
-                }
+                //}
                 panel1.updateUI();
             }
         });

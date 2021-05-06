@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class MySQLManager {
     private Connection openConnection(){
         String driver = "com.mysql.jdbc.Driver";
-        String connectionString = "jdbc:mysql://localhost:3306/lib?useUnicode=true&serverTimezone=UTC&useSSL=false&verifyServerCertificate=false";
+        String connectionString = "jdbc:mysql://localhost:3306/lib?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&useSSL=false&verifyServerCertificate=false";
         String username = "libr";
         String password = "libr";
         try{
@@ -156,5 +156,31 @@ public class MySQLManager {
         }
         return null;
         // TODO: 05.05.2021 change request
+    }
+
+    public ArrayList<Book> getByRequest(String SQL) throws SQLException {
+        Connection conn = null;
+        try{
+            conn = openConnection();
+            conn.setAutoCommit(false);
+            ArrayList<Book> books = new ArrayList<Book>();
+            Statement stm = conn.createStatement();
+            System.out.println(SQL);
+            ResultSet rs = stm.executeQuery(SQL);
+            while (rs.next()){
+                Book b = new Book(rs.getString("isbn"),rs.getString("name"), rs.getString("year"),rs.getString("language"),rs.getString("publisher"),rs.getString("location"),rs.getString("annotation"));
+                b.setGenres(this.getGenresByIsbn(rs.getString("isbn")));
+                b.setAuthors(this.getAuthorsByIsbn(rs.getString("isbn")));
+                books.add(b);
+            }
+            rs.close();
+            stm.close();
+            return books;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            conn.close();
+        }
+        return null;
     }
 }
