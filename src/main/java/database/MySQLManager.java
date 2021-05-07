@@ -133,29 +133,27 @@ public class MySQLManager {
         }
         return null;
     }
-    public ArrayList<Book> getBooksByAuthor(String author) throws SQLException {
+
+    public ArrayList<String> getPublishers() throws SQLException {
         Connection conn = null;
         try{
             conn = openConnection();
             conn.setAutoCommit(false);
-            ArrayList<Book> books = new ArrayList<Book>();
+            ArrayList<String> genres = new ArrayList<String>();
             Statement stm = conn.createStatement();
-            ResultSet rs = stm.executeQuery("SELECT isbn, book.name AS name, year, publisher.name AS publisher, language, annotation, location FROM (book INNER JOIN publisher ON book.id_publisher = publisher.id) INNER JOIN LANGUAGE ON book.id_language;");
+            ResultSet rs = stm.executeQuery("SELECT name FROM publisher");
             while (rs.next()){
-                Book b = new Book(rs.getString("isbn"),rs.getString("name"), rs.getString("year"),rs.getString("language"),rs.getString("publisher"),rs.getString("location"),rs.getString("annotation"));
-                b.setGenres(this.getGenresByIsbn(rs.getString("isbn")));
-                books.add(b);
+                genres.add(rs.getString("name"));
             }
             rs.close();
             stm.close();
-            return books;
+            return genres;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }finally {
             conn.close();
         }
         return null;
-        // TODO: 05.05.2021 change request
     }
 
     public ArrayList<Book> getByRequest(String SQL) throws SQLException {

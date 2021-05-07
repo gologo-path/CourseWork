@@ -23,6 +23,7 @@ public class SearchForm {
     private JComboBox language;
     private JComboBox genre;
     private JPanel resultPanel;
+    private JComboBox publisher;
 
     public SearchForm() {
         manager = new MySQLManager();
@@ -31,22 +32,23 @@ public class SearchForm {
             public void actionPerformed(ActionEvent e) {
                 resultPanel.removeAll();
                 //if (textField1.getText().equals("")) {
-                    try {
-                        ArrayList<Book> books = manager.getByRequest(new SQLBuilder((String) comboBox1.getSelectedItem(), (String) language.getSelectedItem(), (String) genre.getSelectedItem(), textField1.getText()).getSQL());
-                        System.out.println(books.size());
-                        for (Book book : books) {
-                            BookItem item = new BookItem(book);
-                            resultPanel.add(item.$$$getRootComponent$$$());
-                        }
-                    } catch (SQLException throwables) {
-                        throwables.printStackTrace();
+                try {
+                    ArrayList<Book> books = manager.getByRequest(new SQLBuilder((String) comboBox1.getSelectedItem(), (String) language.getSelectedItem(), (String) genre.getSelectedItem(), (String) publisher.getSelectedItem(), textField1.getText()).getSQL());
+                    System.out.println(books.size());
+                    for (Book book : books) {
+                        BookItem item = new BookItem(book);
+                        resultPanel.add(item.$$$getRootComponent$$$());
                     }
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
                 //}
                 panel1.updateUI();
             }
         });
         this.setGenreList();
         this.setLanguageList();
+        this.setPublisherList();
     }
 
     private void setGenreList() {
@@ -63,6 +65,16 @@ public class SearchForm {
         try {
             for (String language : this.manager.getLanguages()) {
                 this.language.addItem(language);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    private void setPublisherList() {
+        try {
+            for (String publisher : this.manager.getPublishers()) {
+                this.publisher.addItem(publisher);
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -100,7 +112,7 @@ public class SearchForm {
         comboBox1.setModel(defaultComboBoxModel1);
         panel2.add(comboBox1, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JPanel panel3 = new JPanel();
-        panel3.setLayout(new GridLayoutManager(1, 3, new Insets(0, 0, 0, 0), -1, -1));
+        panel3.setLayout(new GridLayoutManager(1, 4, new Insets(0, 0, 0, 0), -1, -1));
         panel1.add(panel3, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         searchButton = new JButton();
         searchButton.setText("Search");
@@ -115,6 +127,11 @@ public class SearchForm {
         defaultComboBoxModel3.addElement("Any genre");
         genre.setModel(defaultComboBoxModel3);
         panel3.add(genre, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        publisher = new JComboBox();
+        final DefaultComboBoxModel defaultComboBoxModel4 = new DefaultComboBoxModel();
+        defaultComboBoxModel4.addElement("Any publisher");
+        publisher.setModel(defaultComboBoxModel4);
+        panel3.add(publisher, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JScrollPane scrollPane1 = new JScrollPane();
         panel1.add(scrollPane1, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         resultPanel = new JPanel();
