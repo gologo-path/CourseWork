@@ -6,10 +6,10 @@ import com.intellij.uiDesigner.core.Spacer;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-public class Registration {
+public class Registration extends JDialog {
+    private JPanel contentPane;
+    private JPanel panel1;
     private JTextField textField1;
     private JTextField textField2;
     private JTextField textField3;
@@ -20,17 +20,12 @@ public class Registration {
     private JButton cancelButton;
     private JLabel emailError;
     private JLabel passError;
-    private JPanel panel1;
+    private JButton buttonOK;
 
     public Registration() {
-        emailError.setVisible(false);
-        passError.setVisible(false);
-        cancelButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
-
+        setContentPane(contentPane);
+        setModal(true);
+        getRootPane().setDefaultButton(buttonOK);
     }
 
     {
@@ -48,8 +43,11 @@ public class Registration {
      * @noinspection ALL
      */
     private void $$$setupUI$$$() {
+        contentPane = new JPanel();
+        contentPane.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
         panel1 = new JPanel();
         panel1.setLayout(new GridLayoutManager(8, 8, new Insets(0, 0, 0, 0), -1, -1));
+        contentPane.add(panel1);
         final JLabel label1 = new JLabel();
         label1.setText("Name");
         panel1.add(label1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
@@ -134,6 +132,6 @@ public class Registration {
      * @noinspection ALL
      */
     public JComponent $$$getRootComponent$$$() {
-        return panel1;
+        return contentPane;
     }
 }
