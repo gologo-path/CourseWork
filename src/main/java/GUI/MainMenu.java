@@ -10,7 +10,7 @@ public class MainMenu {
     private JButton changeProfileInfoButton;
     private JButton findBookButton;
     private JButton myBooksButton;
-    private JButton exitButton;
+    private JButton logOutButton;
 
     public MainMenu() {
         changeProfileInfoButton.addActionListener(new ActionListener() {
@@ -28,7 +28,7 @@ public class MainMenu {
 
             }
         });
-        exitButton.addActionListener(new ActionListener() {
+        logOutButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 
             }
@@ -78,15 +78,16 @@ public class MainMenu {
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
         panel1.add(myBooksButton, gbc);
-        exitButton = new JButton();
-        exitButton.setText("Exit");
+        logOutButton = new JButton();
+        logOutButton.setText("Log out");
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 3;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
-        panel1.add(exitButton, gbc);
+        panel1.add(logOutButton, gbc);
     }
+
     /**
      * @noinspection ALL
      */

@@ -66,6 +66,7 @@ public class MySQLManager {
         return null;
     }
 
+    // possibly useless method
     public ArrayList<Book> getBooks() throws SQLException {
         Connection conn = null;
         try{
@@ -181,4 +182,24 @@ public class MySQLManager {
         }
         return null;
     }
+/*
+    int getUserID(String email, String pass){
+        Connection conn = null;
+        try{
+            conn = openConnection();
+            conn.setAutoCommit(false);
+            ArrayList<Book> books = new ArrayList<Book>();
+            Statement stm = conn.createStatement();
+            ResultSet rs = stm.executeQuery();
+
+            rs.close();
+            stm.close();
+            return books;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            conn.close();
+        }
+        return null;
+    }*/
 }
