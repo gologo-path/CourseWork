@@ -1,6 +1,7 @@
 package database;
 
 import entities.Book;
+import entities.User;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -202,4 +203,42 @@ public class MySQLManager {
         }
         return null;
     }*/
+
+    public boolean isEmailRegistered(String email) throws SQLException {
+        boolean flag = false;
+        Connection conn = null;
+        try{
+            conn = openConnection();
+            conn.setAutoCommit(false);
+            Statement stm = conn.createStatement();
+            ResultSet rs = stm.executeQuery("SELECT * FROM user WHERE email = '"+email+"'");
+            while (rs.next()){
+                flag = true;
+            }
+            rs.close();
+            stm.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            conn.close();
+        }
+        return flag;
+    }
+    public void addUser(User user, String pass) throws SQLException {
+        Connection conn = null;
+        try{
+            conn = openConnection();
+            conn.setAutoCommit(false);
+            Statement stm = conn.createStatement();
+            int rs = stm.executeUpdate("INSERT INTO user(name,surname,fathers,email,pass) VALUES('"+
+                    user.getName()+"', '"+user.getSurname()+"', '"+user.getFathers()+"', '"+user.getEmail()+"', '"+pass+"');");
+            System.out.println(rs);
+            conn.commit();
+            stm.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            conn.close();
+        }
+    }
 }

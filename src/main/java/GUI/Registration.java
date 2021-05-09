@@ -3,29 +3,94 @@ package GUI;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
+import database.MySQLManager;
+import entities.User;
+import org.apache.commons.codec.digest.DigestUtils;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 public class Registration extends JDialog {
     private JPanel contentPane;
     private JPanel panel1;
-    private JTextField textField1;
-    private JTextField textField2;
-    private JTextField textField3;
-    private JTextField textField4;
-    private JPasswordField passwordField1;
-    private JPasswordField passwordField2;
+    private JTextField surname;
+    private JTextField fathers;
+    private JTextField email;
+    private JPasswordField pass1;
+    private JPasswordField pass2;
     private JButton registrateButton;
     private JButton cancelButton;
     private JLabel emailError;
     private JLabel passError;
+    private JTextField name;
 
     public Registration(Window frame) {
         super(frame);
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(registrateButton);
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        passError.setVisible(false);
+        emailError.setVisible(false);
+        cancelButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+            }
+        });
+        registrateButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onRegistration();
+            }
+        });
+    }
+
+    private void onRegistration() {
+        if (emailValid() && passwordValid()) {
+            MySQLManager manager = new MySQLManager();
+            User user = new User(name.getText(), surname.getText(), fathers.getText(), email.getText());
+            String hash = DigestUtils.sha256Hex(String.valueOf(pass1.getPassword()));
+            try {
+                manager.addUser(user, hash);
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+            dispose();
+        }
+    }
+
+    private boolean emailValid() {
+        if (!email.getText().contains("@")) {
+            emailError.setText("Invalid email");
+            emailError.setVisible(true);
+        } else {
+            MySQLManager manager = new MySQLManager();
+            try {
+                if (manager.isEmailRegistered(email.getText())) {
+                    emailError.setText("Email already exist");
+                    emailError.setVisible(true);
+                } else {
+                    return true;
+                }
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+        return false;
+    }
+
+    private boolean passwordValid() {
+        if (String.valueOf(pass1.getPassword()).equals(String.valueOf(pass2.getPassword()))) {
+            passError.setVisible(false);
+            return true;
+        } else {
+            passError.setVisible(true);
+            return false;
+        }
     }
 
     {
@@ -66,18 +131,18 @@ public class Registration extends JDialog {
         final JLabel label6 = new JLabel();
         label6.setText("repeat password");
         panel1.add(label6, new GridConstraints(5, 0, 1, 2, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        textField1 = new JTextField();
-        panel1.add(textField1, new GridConstraints(0, 7, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
-        textField2 = new JTextField();
-        panel1.add(textField2, new GridConstraints(1, 7, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
-        textField3 = new JTextField();
-        panel1.add(textField3, new GridConstraints(2, 7, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
-        textField4 = new JTextField();
-        panel1.add(textField4, new GridConstraints(3, 7, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
-        passwordField1 = new JPasswordField();
-        panel1.add(passwordField1, new GridConstraints(4, 7, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
-        passwordField2 = new JPasswordField();
-        panel1.add(passwordField2, new GridConstraints(5, 7, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        name = new JTextField();
+        panel1.add(name, new GridConstraints(0, 7, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        surname = new JTextField();
+        panel1.add(surname, new GridConstraints(1, 7, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        fathers = new JTextField();
+        panel1.add(fathers, new GridConstraints(2, 7, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        email = new JTextField();
+        panel1.add(email, new GridConstraints(3, 7, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        pass1 = new JPasswordField();
+        panel1.add(pass1, new GridConstraints(4, 7, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        pass2 = new JPasswordField();
+        panel1.add(pass2, new GridConstraints(5, 7, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JPanel panel2 = new JPanel();
         panel2.setLayout(new GridBagLayout());
         panel1.add(panel2, new GridConstraints(6, 0, 1, 8, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
@@ -134,4 +199,5 @@ public class Registration extends JDialog {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
+
 }

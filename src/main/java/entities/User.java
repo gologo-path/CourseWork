@@ -6,6 +6,7 @@ public class User {
     private String name;
     private String surname;
     private String fathers;
+    private String email;
     private int id;
     private boolean inBlackList;
     private boolean isAdmin;
@@ -25,6 +26,14 @@ public class User {
         this.fathers = " ";
         this.isAdmin = isAdmin;
     }
+
+    public User (String name, String surname, String fathers, String email){
+        this.name = name;
+        this.surname = surname;
+        this.fathers = fathers;
+        this.email = email;
+    }
+
     public String getName() {
         return name;
     }
@@ -51,5 +60,9 @@ public class User {
 
     public void setInBlackList(boolean inBlackList) {
         this.inBlackList = inBlackList;
+    }
+
+    public String getEmail() {
+        return email;
     }
 }

@@ -29,6 +29,8 @@ public class LogIn extends JDialog {
                 r.setVisible(true);
             }
         });
+
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
     }
 
     {

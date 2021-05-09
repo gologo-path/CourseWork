@@ -16,7 +16,7 @@ public class test {
         frame.setSize(500,300);
         //frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+        frame.setVisible(true);
 
     }
 }
