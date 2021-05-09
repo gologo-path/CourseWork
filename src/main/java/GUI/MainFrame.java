@@ -29,7 +29,8 @@ public class MainFrame extends JFrame {
            menu.adminStaffButton.setVisible(false);
            menu.changeProfileInfoButton.setEnabled(false);
            menu.findBookButton.setEnabled(false);
-
+           new BlackListDialog(this).setVisible(true);
        }
+
     }
 }
