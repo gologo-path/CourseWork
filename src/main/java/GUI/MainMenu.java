@@ -1,18 +1,22 @@
 package GUI;
 
+import entities.User;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class MainMenu {
-    private JPanel panel1;
-    private JButton changeProfileInfoButton;
-    private JButton findBookButton;
-    private JButton myBooksButton;
-    private JButton logOutButton;
+    public JPanel panel1;
+    public JButton changeProfileInfoButton;
+    public JButton findBookButton;
+    public JButton myBooksButton;
+    public JButton logOutButton;
+    public JButton adminStaffButton;
 
     public MainMenu() {
+        adminStaffButton.setVisible(false);
         changeProfileInfoButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 
@@ -58,7 +62,7 @@ public class MainMenu {
         GridBagConstraints gbc;
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
-        gbc.gridy = 0;
+        gbc.gridy = 1;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
         panel1.add(changeProfileInfoButton, gbc);
@@ -66,7 +70,7 @@ public class MainMenu {
         findBookButton.setText("Find book");
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
-        gbc.gridy = 1;
+        gbc.gridy = 2;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
         panel1.add(findBookButton, gbc);
@@ -74,7 +78,7 @@ public class MainMenu {
         myBooksButton.setText("My books");
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
-        gbc.gridy = 2;
+        gbc.gridy = 3;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
         panel1.add(myBooksButton, gbc);
@@ -82,10 +86,16 @@ public class MainMenu {
         logOutButton.setText("Log out");
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
-        gbc.gridy = 3;
+        gbc.gridy = 4;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
         panel1.add(logOutButton, gbc);
+        adminStaffButton = new JButton();
+        adminStaffButton.setText("Admin staff");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        panel1.add(adminStaffButton, gbc);
     }
 
     /**
@@ -94,4 +104,5 @@ public class MainMenu {
     public JComponent $$$getRootComponent$$$() {
         return panel1;
     }
+
 }
