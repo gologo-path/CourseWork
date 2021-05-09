@@ -183,26 +183,6 @@ public class MySQLManager {
         }
         return null;
     }
-/*
-    int getUserID(String email, String pass){
-        Connection conn = null;
-        try{
-            conn = openConnection();
-            conn.setAutoCommit(false);
-            ArrayList<Book> books = new ArrayList<Book>();
-            Statement stm = conn.createStatement();
-            ResultSet rs = stm.executeQuery();
-
-            rs.close();
-            stm.close();
-            return books;
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }finally {
-            conn.close();
-        }
-        return null;
-    }*/
 
     public boolean isEmailRegistered(String email) throws SQLException {
         boolean flag = false;
@@ -240,5 +220,27 @@ public class MySQLManager {
         }finally {
             conn.close();
         }
+    }
+
+    public String getHashByEmail(String email) throws SQLException {
+        Connection conn = null;
+        try{
+            String hash = null;
+            conn = openConnection();
+            conn.setAutoCommit(false);
+            Statement stm = conn.createStatement();
+            ResultSet rs = stm.executeQuery("SELECT pass FROM user WHERE email = '"+email+"' ");
+            if (rs.next()){
+                hash = rs.getString("pass");
+            }
+            rs.close();
+            stm.close();
+            return hash;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            conn.close();
+        }
+        return null;
     }
 }
