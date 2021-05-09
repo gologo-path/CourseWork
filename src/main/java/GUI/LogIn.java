@@ -65,8 +65,10 @@ public class LogIn extends JDialog {
                 if (hash != null) {
                     if (DigestUtils.sha256Hex(String.valueOf(pass.getPassword())).equals(hash)) {
                         System.out.println("ok");
-                        // TODO: 09.05.2021 return user ? 
+                        user = manager.getUserByEmail(email.getText());
+                        user.setInBlackList(manager.isInBlackList(user.getId()));
                         error.setVisible(false);
+                        dispose();
                     } else {
                         error.setText("Invalid password");
                         error.setVisible(true);

@@ -243,4 +243,47 @@ public class MySQLManager {
         }
         return null;
     }
+
+    public User getUserByEmail(String email) throws SQLException {
+        Connection conn = null;
+        try{
+            conn = openConnection();
+            conn.setAutoCommit(false);
+            User user = null;
+            Statement stm = conn.createStatement();
+            ResultSet rs = stm.executeQuery("SELECT id, name, surname, fathers, admin FROM user");
+            if (rs.next()){
+                user = new User(Integer.parseInt(rs.getString("id")),rs.getString("name"),rs.getString("surname"),rs.getString("fathers"),Integer.parseInt(rs.getString("admin")));
+            }
+            rs.close();
+            stm.close();
+            return user;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            conn.close();
+        }
+        return null;
+    }
+
+    public boolean isInBlackList(int id) throws SQLException {
+        boolean flag = false;
+        Connection conn = null;
+        try{
+            conn = openConnection();
+            conn.setAutoCommit(false);
+            Statement stm = conn.createStatement();
+            ResultSet rs = stm.executeQuery("SELECT * FROM blacklist WHERE id_u = '"+id+"'");
+            while (rs.next()){
+                flag = true;
+            }
+            rs.close();
+            stm.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            conn.close();
+        }
+        return flag;
+    }
 }

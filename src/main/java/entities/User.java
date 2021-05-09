@@ -11,20 +11,20 @@ public class User {
     private boolean inBlackList;
     private boolean isAdmin;
 
-    public User(int id, String name, String surname, String fathers, boolean isAdmin) {
+    public User(int id, String name, String surname, String fathers, int isAdmin) {
         this.name = name;
         this.surname = surname;
         this.id = id;
         this.fathers = fathers;
-        this.isAdmin = isAdmin;
+        this.isAdmin = isAdmin != 0;
     }
 
-    public User(int id, String name, String surname, boolean isAdmin) {
+    public User(int id, String name, String surname, int isAdmin) {
         this.name = name;
         this.surname = surname;
         this.id = id;
         this.fathers = " ";
-        this.isAdmin = isAdmin;
+        this.isAdmin = isAdmin != 0;
     }
 
     public User (String name, String surname, String fathers, String email){
