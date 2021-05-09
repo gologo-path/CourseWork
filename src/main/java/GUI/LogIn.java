@@ -5,6 +5,8 @@ import com.intellij.uiDesigner.core.GridLayoutManager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class LogIn extends JDialog {
     private JPanel contentPane;
@@ -13,12 +15,20 @@ public class LogIn extends JDialog {
     private JButton signUpButton;
     private JTextField textField1;
     private JPasswordField passwordField1;
-    private JButton buttonOK;
+    private Window th;
 
-    public LogIn() {
+    public LogIn(Frame frame) {
+        super(frame);
         setContentPane(contentPane);
         setModal(true);
-        getRootPane().setDefaultButton(buttonOK);
+        th = this;
+        getRootPane().setDefaultButton(logInButton);
+        signUpButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Registration r = new Registration(th);
+                r.setVisible(true);
+            }
+        });
     }
 
     {

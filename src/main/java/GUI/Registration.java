@@ -20,12 +20,12 @@ public class Registration extends JDialog {
     private JButton cancelButton;
     private JLabel emailError;
     private JLabel passError;
-    private JButton buttonOK;
 
-    public Registration() {
+    public Registration(Window frame) {
+        super(frame);
         setContentPane(contentPane);
         setModal(true);
-        getRootPane().setDefaultButton(buttonOK);
+        getRootPane().setDefaultButton(registrateButton);
     }
 
     {
