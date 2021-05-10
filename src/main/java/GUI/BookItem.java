@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class BookItem {
+    private Book book;
     private JPanel panel1;
     private JLabel name;
     private JLabel isbn;
@@ -23,6 +24,7 @@ public class BookItem {
     private JLabel authors;
 
     public BookItem(Book book) {
+        this.book = book;
         name.setText(book.getName());
         isbn.setText(book.getIsbn());
         year.setText(String.valueOf(book.getYear()));
