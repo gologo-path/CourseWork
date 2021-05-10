@@ -55,5 +55,16 @@ public class MainFrame extends JFrame {
                 mainPanel.updateUI();
            }
        });
+       menu.findBookButton.addActionListener(new ActionListener() {
+           @Override
+           public void actionPerformed(ActionEvent e) {
+               SearchForm searchForm = new SearchForm();
+               mainPanel.removeAll();
+               mainPanel.add(searchForm.$$$getRootComponent$$$());
+               back.setVisible(true);
+               mainPanel.updateUI();
+           }
+       });
+
     }
 }

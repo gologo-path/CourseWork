@@ -33,7 +33,7 @@ public class SearchForm {
                 resultPanel.removeAll();
                 //if (textField1.getText().equals("")) {
                 try {
-                    ArrayList<Book> books = manager.getByRequest(new SQLBuilder((String) comboBox1.getSelectedItem(), (String) language.getSelectedItem(), (String) genre.getSelectedItem(), (String) publisher.getSelectedItem(), textField1.getText()).getSQL());
+                    ArrayList<Book> books = manager.getByRequest(new SQLBuilder((String) comboBox1.getSelectedItem(), (String) language.getSelectedItem(), (String) genre.getSelectedItem(), (String) publisher.getSelectedItem(), textField1.getText()).forBookCollection());
                     System.out.println(books.size());
                     for (Book book : books) {
                         BookItem item = new BookItem(book);

@@ -117,31 +117,18 @@ public class ChangeInfo {
         panel2.add(changeButton, gbc);
         final JPanel spacer1 = new JPanel();
         gbc = new GridBagConstraints();
-        gbc.gridx = 1;
-        gbc.gridy = 1;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.fill = GridBagConstraints.VERTICAL;
         panel2.add(spacer1, gbc);
         final JPanel spacer2 = new JPanel();
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
-        gbc.gridy = 2;
-        gbc.fill = GridBagConstraints.VERTICAL;
-        panel2.add(spacer2, gbc);
-        cancelButton = new JButton();
-        cancelButton.setText("Cancel");
-        gbc = new GridBagConstraints();
-        gbc.gridx = 2;
-        gbc.gridy = 1;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        panel2.add(cancelButton, gbc);
-        final JPanel spacer3 = new JPanel();
-        gbc = new GridBagConstraints();
-        gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.fill = GridBagConstraints.VERTICAL;
-        panel2.add(spacer3, gbc);
-        final Spacer spacer4 = new Spacer();
-        panel1.add(spacer4, new GridConstraints(5, 7, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        panel2.add(spacer2, gbc);
+        final Spacer spacer3 = new Spacer();
+        panel1.add(spacer3, new GridConstraints(5, 7, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         emailError = new JLabel();
         emailError.setForeground(new Color(-4519390));
         emailError.setText("email already exist");
@@ -154,4 +141,5 @@ public class ChangeInfo {
     public JComponent $$$getRootComponent$$$() {
         return root;
     }
+
 }
