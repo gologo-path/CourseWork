@@ -67,6 +67,7 @@ public class LogIn extends JDialog {
                         System.out.println("ok");
                         user = manager.getUserByEmail(email.getText());
                         user.setInBlackList(manager.isInBlackList(user.getId()));
+                        user.setEmail(email.getText());
                         error.setVisible(false);
                         dispose();
                     } else {

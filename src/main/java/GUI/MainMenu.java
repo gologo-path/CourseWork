@@ -17,7 +17,7 @@ public class MainMenu {
 
     public MainMenu() {
         adminStaffButton.setVisible(false);
-        changeProfileInfoButton.addActionListener(new ActionListener() {
+        /*changeProfileInfoButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 
             }
@@ -36,7 +36,7 @@ public class MainMenu {
             public void actionPerformed(ActionEvent e) {
 
             }
-        });
+        });*/
     }
 
     {
