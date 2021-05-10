@@ -255,7 +255,7 @@ public class MySQLManager {
             conn.setAutoCommit(false);
             User user = null;
             Statement stm = conn.createStatement();
-            ResultSet rs = stm.executeQuery("SELECT id, name, surname, fathers, admin FROM user WHERE email = "+email);
+            ResultSet rs = stm.executeQuery("SELECT id, name, surname, fathers, admin FROM user WHERE email = '"+email+"'");
             if (rs.next()){
                 user = new User(Integer.parseInt(rs.getString("id")),rs.getString("name"),rs.getString("surname"),rs.getString("fathers"),Integer.parseInt(rs.getString("admin")));
             }
