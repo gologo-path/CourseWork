@@ -13,7 +13,7 @@ public class MainFrame extends JFrame {
     public MainFrame(){
         setLayout(new BorderLayout());
         final MainMenu menu = new MainMenu();
-        LogIn logIn = new LogIn(this);
+        final LogIn logIn = new LogIn(this);
         mainPanel = new JPanel(new BorderLayout());
         mainPanel.add(menu.$$$getRootComponent$$$());
         add(mainPanel, BorderLayout.CENTER);
@@ -24,7 +24,8 @@ public class MainFrame extends JFrame {
         setVisible(true);
         logIn.setVisible(true);
         user = logIn.getUser();
-        add(new Label("Signed in as : "+user.getName()+" "+user.getSurname()),BorderLayout.NORTH);
+        final Label logInAs = new Label("Signed in as : "+user.getName()+" "+user.getSurname());
+        add(logInAs,BorderLayout.NORTH);
         mainPanel.updateUI();
         final JButton back = new JButton("Back to main menu");
         back.addActionListener(new ActionListener() {
@@ -65,6 +66,25 @@ public class MainFrame extends JFrame {
                mainPanel.updateUI();
            }
        });
-
+       menu.myBooksButton.addActionListener(new ActionListener() {
+           @Override
+           public void actionPerformed(ActionEvent e) {
+               MyBooks myBooks = new MyBooks(user.getId());
+               mainPanel.removeAll();
+               mainPanel.add(myBooks.$$$getRootComponent$$$());
+               back.setVisible(true);
+               mainPanel.updateUI();
+           }
+       });
+       menu.logOutButton.addActionListener(new ActionListener() {
+           @Override
+           public void actionPerformed(ActionEvent e) {
+               logInAs.setText("");
+               logIn.clearFields();
+               logIn.setVisible(true);
+               user = logIn.getUser();
+               logInAs.setText("Signed in as : "+user.getName()+" "+user.getSurname());
+           }
+       });
     }
 }
