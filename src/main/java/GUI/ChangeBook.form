@@ -80,7 +80,7 @@
               <text value="Author"/>
             </properties>
           </component>
-          <component id="74c92" class="javax.swing.JTextField" binding="textField1" default-binding="true">
+          <component id="74c92" class="javax.swing.JTextField" binding="name">
             <constraints>
               <grid row="0" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="-1"/>
@@ -88,7 +88,7 @@
             </constraints>
             <properties/>
           </component>
-          <component id="4d8dc" class="javax.swing.JTextField" binding="textField2" default-binding="true">
+          <component id="4d8dc" class="javax.swing.JTextField" binding="isbn">
             <constraints>
               <grid row="1" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="-1"/>
@@ -96,7 +96,7 @@
             </constraints>
             <properties/>
           </component>
-          <component id="1c1f3" class="javax.swing.JTextField" binding="textField4" default-binding="true">
+          <component id="1c1f3" class="javax.swing.JTextField" binding="year">
             <constraints>
               <grid row="3" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="-1"/>
@@ -104,51 +104,51 @@
             </constraints>
             <properties/>
           </component>
-          <component id="17404" class="javax.swing.JComboBox" binding="comboBox1" default-binding="true">
+          <component id="17404" class="javax.swing.JComboBox" binding="publisher">
             <constraints>
               <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties/>
           </component>
-          <component id="cc3f6" class="javax.swing.JComboBox" binding="comboBox2" default-binding="true">
+          <component id="cc3f6" class="javax.swing.JComboBox" binding="language">
             <constraints>
               <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties/>
           </component>
-          <component id="205f2" class="javax.swing.JButton" binding="button3" default-binding="true">
+          <component id="205f2" class="javax.swing.JButton" binding="addNewLanguage">
             <constraints>
               <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Button"/>
+              <text value="Add new "/>
             </properties>
           </component>
-          <component id="40790" class="javax.swing.JButton" binding="button4" default-binding="true">
+          <component id="40790" class="javax.swing.JButton" binding="addNewPublisher">
             <constraints>
               <grid row="5" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Button"/>
+              <text value="Add new"/>
             </properties>
           </component>
-          <component id="fe970" class="javax.swing.JButton" binding="button2" default-binding="true">
+          <component id="fe970" class="javax.swing.JButton" binding="editAuthorsListButton" default-binding="true">
             <constraints>
               <grid row="2" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Button"/>
+              <text value="Edit authors list"/>
             </properties>
           </component>
-          <component id="3c4aa" class="javax.swing.JButton" binding="button5" default-binding="true">
+          <component id="3c4aa" class="javax.swing.JButton" binding="editGenresListButton" default-binding="true">
             <constraints>
               <grid row="6" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Button"/>
+              <text value="Edit genres list"/>
             </properties>
           </component>
-          <component id="68026" class="javax.swing.JTextPane" binding="textPane1" default-binding="true">
+          <component id="68026" class="javax.swing.JTextPane" binding="annotation">
             <constraints>
               <grid row="7" column="1" row-span="1" col-span="2" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="50"/>
@@ -158,12 +158,12 @@
           </component>
         </children>
       </grid>
-      <component id="4d33f" class="javax.swing.JButton" binding="button1" default-binding="true">
+      <component id="4d33f" class="javax.swing.JButton" binding="submitChangesButton" default-binding="true">
         <constraints>
           <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Button"/>
+          <text value="Submit changes"/>
         </properties>
       </component>
     </children>

@@ -24,16 +24,16 @@ public class MySQLManager {
         return null;
     }
 
-    public ArrayList<String> getGenres() throws SQLException {
+    public HashMap<String, Integer> getGenres() throws SQLException {
         Connection conn = null;
         try{
             conn = openConnection();
             conn.setAutoCommit(false);
-            ArrayList<String> genres = new ArrayList<String>();
+            HashMap<String, Integer> genres = new HashMap<String, Integer>();
             Statement stm = conn.createStatement();
-            ResultSet rs = stm.executeQuery("SELECT genre FROM genre");
+            ResultSet rs = stm.executeQuery("SELECT id, genre FROM genre");
             while (rs.next()){
-                genres.add(rs.getString("genre"));
+                genres.put(rs.getString("genre"), Integer.valueOf(rs.getString("id")));
             }
             rs.close();
             stm.close();
@@ -46,20 +46,20 @@ public class MySQLManager {
         return null;
     }
 
-    public ArrayList<String> getLanguages() throws SQLException {
+    public HashMap<String, Integer> getLanguages() throws SQLException {
         Connection conn = null;
         try{
             conn = openConnection();
             conn.setAutoCommit(false);
-            ArrayList<String> genres = new ArrayList<String>();
+            HashMap<String, Integer> language = new HashMap<String, Integer>();
             Statement stm = conn.createStatement();
-            ResultSet rs = stm.executeQuery("SELECT language FROM language");
+            ResultSet rs = stm.executeQuery("SELECT id, language FROM language");
             while (rs.next()){
-                genres.add(rs.getString("language"));
+                language.put(rs.getString("language"), Integer.valueOf(rs.getString("id")));
             }
             rs.close();
             stm.close();
-            return genres;
+            return language;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }finally {
@@ -137,20 +137,20 @@ public class MySQLManager {
         return null;
     }
 
-    public ArrayList<String> getPublishers() throws SQLException {
+    public HashMap<String, Integer> getPublishers() throws SQLException {
         Connection conn = null;
         try{
             conn = openConnection();
             conn.setAutoCommit(false);
-            ArrayList<String> genres = new ArrayList<String>();
+            HashMap<String, Integer> publishers = new HashMap<String, Integer>();
             Statement stm = conn.createStatement();
-            ResultSet rs = stm.executeQuery("SELECT name FROM publisher");
+            ResultSet rs = stm.executeQuery("SELECT id, name FROM publisher");
             while (rs.next()){
-                genres.add(rs.getString("name"));
+                publishers.put(rs.getString("name"), Integer.valueOf(rs.getString("id")));
             }
             rs.close();
             stm.close();
-            return genres;
+            return publishers;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }finally {
