@@ -58,7 +58,7 @@ public class SearchForm {
 
     private void setGenreList() {
         try {
-            for (String genre : this.manager.getGenres()) {
+            for (String genre : this.manager.getGenres().keySet()) {
                 this.genre.addItem(genre);
             }
         } catch (SQLException throwables) {
@@ -68,7 +68,7 @@ public class SearchForm {
 
     private void setLanguageList() {
         try {
-            for (String language : this.manager.getLanguages()) {
+            for (String language : this.manager.getLanguages().keySet()) {
                 this.language.addItem(language);
             }
         } catch (SQLException throwables) {
@@ -78,7 +78,7 @@ public class SearchForm {
 
     private void setPublisherList() {
         try {
-            for (String publisher : this.manager.getPublishers()) {
+            for (String publisher : this.manager.getPublishers().keySet()) {
                 this.publisher.addItem(publisher);
             }
         } catch (SQLException throwables) {
