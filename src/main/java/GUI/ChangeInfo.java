@@ -19,7 +19,6 @@ public class ChangeInfo {
     private JTextField fathers;
     private JTextField email;
     private JButton changeButton;
-    private JButton cancelButton;
     private JLabel emailError;
     private JPanel root;
 
