@@ -14,5 +14,6 @@ public class ItemToAdd extends BookItem{
                 // TODO: 10.05.2021 interact with db
             }
         });
+        button1.setText("Take");
     }
 }

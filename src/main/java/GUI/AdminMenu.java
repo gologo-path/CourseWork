@@ -25,7 +25,10 @@ public class AdminMenu {
         changeBookButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                SearchForm searchForm = new SearchForm(ItemToChange.class.getName());
+                root.removeAll();
+                root.add(searchForm.$$$getRootComponent$$$());
+                root.updateUI();
             }
         });
         changeUserButton.addActionListener(new ActionListener() {

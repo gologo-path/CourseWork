@@ -59,7 +59,7 @@ public class MainFrame extends JFrame {
        menu.findBookButton.addActionListener(new ActionListener() {
            @Override
            public void actionPerformed(ActionEvent e) {
-               SearchForm searchForm = new SearchForm();
+               SearchForm searchForm = new SearchForm(ItemToAdd.class.getName());
                mainPanel.removeAll();
                mainPanel.add(searchForm.$$$getRootComponent$$$());
                back.setVisible(true);

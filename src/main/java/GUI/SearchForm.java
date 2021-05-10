@@ -11,6 +11,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -25,7 +26,7 @@ public class SearchForm {
     private JPanel resultPanel;
     private JComboBox publisher;
 
-    public SearchForm() {
+    public SearchForm(final String itemName) {
         manager = new MySQLManager();
         resultPanel.setLayout(new GridLayout(0, 1, 0, 20));
         searchButton.addActionListener(new ActionListener() {
@@ -36,11 +37,19 @@ public class SearchForm {
                     ArrayList<Book> books = manager.getByRequest(new SQLBuilder((String) comboBox1.getSelectedItem(), (String) language.getSelectedItem(), (String) genre.getSelectedItem(), (String) publisher.getSelectedItem(), textField1.getText()).forBookCollection());
                     System.out.println(books.size());
                     for (Book book : books) {
-                        BookItem item = new BookItem(book);
+                        BookItem item = (BookItem) Class.forName(itemName).getDeclaredConstructors()[0].newInstance(book);
                         resultPanel.add(item.$$$getRootComponent$$$());
                     }
                 } catch (SQLException throwables) {
                     throwables.printStackTrace();
+                } catch (ClassNotFoundException classNotFoundException) {
+                    classNotFoundException.printStackTrace();
+                } catch (IllegalAccessException illegalAccessException) {
+                    illegalAccessException.printStackTrace();
+                } catch (InstantiationException instantiationException) {
+                    instantiationException.printStackTrace();
+                } catch (InvocationTargetException invocationTargetException) {
+                    invocationTargetException.printStackTrace();
                 }
                 //}
                 panel1.updateUI();
