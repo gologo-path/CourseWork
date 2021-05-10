@@ -32,13 +32,7 @@ public class ChangeInfo {
         changeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-            }
-        });
-        cancelButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
+// TODO: 10.05.2021 interact with db
             }
         });
     }
