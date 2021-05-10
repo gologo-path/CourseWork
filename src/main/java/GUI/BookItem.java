@@ -28,11 +28,19 @@ public class BookItem {
         name.setText(book.getName());
         isbn.setText(book.getIsbn());
         year.setText(String.valueOf(book.getYear()));
-        publisher.setText(book.getPublisher());
-        genre.setText(book.getGenres());
+        publisher.setText(book.getPublisher().keySet().iterator().next());
+        String tmp = "";
+        for (String st: book.getGenres().keySet()) {
+            tmp += st+" ";
+        }
+        genre.setText(tmp);
         annotation.setText(book.getAnnotation());
-        language.setText(book.getLanguage());
-        authors.setText(book.getAuthors());
+        language.setText(book.getLanguage().keySet().iterator().next());
+        tmp = "";
+        for (String st: book.getAuthors().keySet()) {
+            tmp += st+" ";
+        }
+        authors.setText(tmp);
     }
 
     public void setNameButton(String name) {

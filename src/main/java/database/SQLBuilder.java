@@ -18,7 +18,7 @@ public class SQLBuilder {
 
 
     public String forBookCollection(){
-        SQL += "SELECT isbn, book.name AS name, year, publisher.name AS publisher, language, annotation, location FROM (book INNER JOIN publisher ON book.id_publisher = publisher.id) INNER JOIN language ON book.id_language = language.id ";
+        SQL += "SELECT isbn, book.name AS name, year, publisher.name AS publisher, language, annotation, location, publisher.id AS id_p, language.id AS id_l FROM (book INNER JOIN publisher ON book.id_publisher = publisher.id) INNER JOIN language ON book.id_language = language.id ";
         if (by.equals("By name")){
             if (!search.equals("")){
                 search+="%";
@@ -45,7 +45,7 @@ public class SQLBuilder {
     }
 
     public String forMyCollection(int id){
-        SQL += "SELECT isbn, book.name AS NAME, YEAR, publisher.name AS publisher, LANGUAGE, annotation, location FROM ((book INNER JOIN publisher ON book.id_publisher = publisher.id) INNER JOIN LANGUAGE ON book.id_language = language.id) INNER JOIN book_user ON book_user.id_b = book.isbn WHERE book_user.id_u = "+id+" ";
+        SQL += "SELECT isbn, book.name AS NAME, YEAR, publisher.name AS publisher, LANGUAGE, annotation, location, publisher.id AS id_p, language.id AS id_l FROM ((book INNER JOIN publisher ON book.id_publisher = publisher.id) INNER JOIN LANGUAGE ON book.id_language = language.id) INNER JOIN book_user ON book_user.id_b = book.isbn WHERE book_user.id_u = "+id+" ";
         if (by.equals("By name")){
             if (!search.equals("")){
                 search+="%";

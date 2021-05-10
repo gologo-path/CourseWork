@@ -5,6 +5,7 @@ import entities.User;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class MySQLManager {
     private Connection openConnection(){
@@ -68,7 +69,7 @@ public class MySQLManager {
     }
 
     // possibly useless method
-    public ArrayList<Book> getBooks() throws SQLException {
+    /*public ArrayList<Book> getBooks() throws SQLException {
         Connection conn = null;
         try{
             conn = openConnection();
@@ -91,18 +92,18 @@ public class MySQLManager {
             conn.close();
         }
         return null;
-    }
-    private String getGenresByIsbn(String isbn) throws SQLException {
+    }*/
+    private HashMap<String, Integer> getGenresByIsbn(String isbn) throws SQLException {
         Connection conn = null;
         try{
             conn = openConnection();
             conn.setAutoCommit(false);
-            String genres = "";
+            HashMap<String, Integer> genres = new HashMap<String, Integer>();
             Statement stm = conn.createStatement();
-            ResultSet rs = stm.executeQuery("SELECT genre FROM genre INNER JOIN book_genre ON genre.id = book_genre.id_g " +
+            ResultSet rs = stm.executeQuery("SELECT genre.id AS ID, genre FROM genre INNER JOIN book_genre ON genre.id = book_genre.id_g " +
                     "WHERE book_genre.id_b = '"+ isbn +"'");
             while (rs.next()){
-                genres += rs.getString("genre") + " ";
+                genres.put(rs.getString("genre"), Integer.valueOf(rs.getString("ID")));
             }
             rs.close();
             stm.close();
@@ -114,20 +115,20 @@ public class MySQLManager {
         }
         return null;
     }
-    private String getAuthorsByIsbn(String isbn) throws SQLException {
+    private HashMap<String, Integer> getAuthorsByIsbn(String isbn) throws SQLException {
         Connection conn = null;
         try{
             conn = openConnection();
             conn.setAutoCommit(false);
-            String genres = "";
+            HashMap<String, Integer> authors = new HashMap<String, Integer>();
             Statement stm = conn.createStatement();
-            ResultSet rs = stm.executeQuery("SELECT CONCAT(LEFT(NAME,1),'. ',IF(fathers IS NULL,'',CONCAT(LEFT(fathers,1),'. ')), surname) AS FIO FROM author_book INNER JOIN author ON author_book.id_a = author.id WHERE id_b = '"+isbn+"'");
+            ResultSet rs = stm.executeQuery("SELECT author.id AS ID, CONCAT(LEFT(NAME,1),'. ',IF(fathers IS NULL,'',CONCAT(LEFT(fathers,1),'. ')), surname) AS FIO FROM author_book INNER JOIN author ON author_book.id_a = author.id WHERE id_b = '"+isbn+"'");
             while (rs.next()){
-                genres += rs.getString("FIO") + " ";
+                authors.put(rs.getString("FIO"), Integer.valueOf(rs.getString("ID")));
             }
             rs.close();
             stm.close();
-            return genres;
+            return authors;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }finally {
@@ -166,9 +167,12 @@ public class MySQLManager {
             ArrayList<Book> books = new ArrayList<Book>();
             Statement stm = conn.createStatement();
             System.out.println(SQL);
-            ResultSet rs = stm.executeQuery(SQL);
+            final ResultSet rs = stm.executeQuery(SQL);
             while (rs.next()){
-                Book b = new Book(rs.getString("isbn"),rs.getString("name"), rs.getString("year"),rs.getString("language"),rs.getString("publisher"),rs.getString("location"),rs.getString("annotation"));
+                Book b = new Book(rs.getString("isbn"),
+                        rs.getString("name"),
+                        rs.getString("year"),
+                        new HashMap<String, Integer>(){{put(rs.getString("language"), Integer.valueOf(rs.getString("id_l")));}},new HashMap<String, Integer>(){{put(rs.getString("publisher"), Integer.valueOf(rs.getString("id_p")));}},rs.getString("location"),rs.getString("annotation"));
                 b.setGenres(this.getGenresByIsbn(rs.getString("isbn")));
                 b.setAuthors(this.getAuthorsByIsbn(rs.getString("isbn")));
                 books.add(b);

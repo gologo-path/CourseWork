@@ -1,19 +1,20 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.HashMap;
 
 public class Book implements Serializable {
     protected String isbn;
     protected String name;
     protected String year;
-    protected String language;
-    protected String publisher;
+    protected HashMap <String, Integer> language;
+    protected HashMap <String, Integer> publisher;
     protected String location;
     protected String annotation;
-    protected String genres;
-    protected String authors;
+    protected HashMap <String, Integer> genres;
+    protected HashMap <String, Integer> authors;
 
-    public Book(String isbn, String name, String year, String language, String publisher, String location, String annotation){
+    public Book(String isbn, String name, String year, HashMap <String, Integer> language, HashMap <String, Integer> publisher, String location, String annotation){
         this.isbn = isbn;
         this.name = name;
         this.year = year;
@@ -21,73 +22,36 @@ public class Book implements Serializable {
         this.publisher = publisher;
         this.location = location;
         this.annotation = annotation;
-    }
-
-    public void setIsbn(String isbn) {
-        this.isbn = isbn;
     }
 
     public String getIsbn() {
         return isbn;
     }
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getName() {
         return name;
     }
-
-    public void setYear(String year) {
-        this.year = year;
-    }
-
     public String getYear() {
         return year;
     }
-
-    public void setLanguage(String language) {
-        this.language = language;
-    }
-
-    public String getLanguage() {
+    public HashMap <String, Integer> getLanguage() {
         return language;
     }
-    public void setPublisher(String publisher) {
-        this.publisher = publisher;
-    }
-
-    public String getPublisher() {
+    public HashMap <String, Integer> getPublisher() {
         return publisher;
     }
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-    public void setAnnotation(String annotation) {
-        this.annotation = annotation;
-    }
-
     public String getAnnotation() {
         return annotation;
     }
-
-    public void setGenres(String genres) {
+    public void setGenres(HashMap <String, Integer> genres) {
         this.genres = genres;
     }
-
-    public String getGenres() {
+    public HashMap <String, Integer> getGenres() {
         return genres;
     }
-
-    public void setAuthors(String authors) {
+    public void setAuthors(HashMap <String, Integer> authors) {
         this.authors = authors;
     }
-
-    public String getAuthors() {
+    public HashMap <String, Integer> getAuthors() {
         return authors;
     }
 }
