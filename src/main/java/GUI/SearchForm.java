@@ -24,8 +24,11 @@ public class SearchForm {
     private JComboBox genre;
     private JPanel resultPanel;
     private JComboBox publisher;
+    protected ActionListener al;
+    String buttonName;
 
     public SearchForm() {
+        setActionListenerForBookItem();
         manager = new MySQLManager();
         resultPanel.setLayout(new GridLayout(0, 1, 0, 20));
         searchButton.addActionListener(new ActionListener() {
@@ -37,6 +40,8 @@ public class SearchForm {
                     System.out.println(books.size());
                     for (Book book : books) {
                         BookItem item = new BookItem(book);
+                        item.setNameButton(buttonName);
+                        item.setActionListener(al);
                         resultPanel.add(item.$$$getRootComponent$$$());
                     }
                 } catch (SQLException throwables) {
@@ -79,6 +84,16 @@ public class SearchForm {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+    }
+
+    protected void setActionListenerForBookItem() {
+        buttonName = "take book";
+        al = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // TODO: 10.05.2021 take book request 
+            }
+        };
     }
 
     {

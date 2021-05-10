@@ -79,11 +79,22 @@ public class MainFrame extends JFrame {
        menu.logOutButton.addActionListener(new ActionListener() {
            @Override
            public void actionPerformed(ActionEvent e) {
+               menu.adminStaffButton.setVisible(false);
                logInAs.setText("");
                logIn.clearFields();
                logIn.setVisible(true);
                user = logIn.getUser();
                logInAs.setText("Signed in as : "+user.getName()+" "+user.getSurname());
+           }
+       });
+       menu.adminStaffButton.addActionListener(new ActionListener() {
+           @Override
+           public void actionPerformed(ActionEvent e) {
+               AdminMenu adminMenu = new AdminMenu();
+               mainPanel.removeAll();
+               mainPanel.add(adminMenu.$$$getRootComponent$$$());
+               back.setVisible(true);
+               mainPanel.updateUI();
            }
        });
     }
