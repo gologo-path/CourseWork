@@ -30,6 +30,7 @@ public class MainFrame extends JFrame {
            menu.changeProfileInfoButton.setEnabled(false);
            menu.findBookButton.setEnabled(false);
            new BlackListDialog(this).setVisible(true);
+           // TODO: 10.05.2021 normal size of window
        }
 
     }
