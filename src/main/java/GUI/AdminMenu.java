@@ -25,21 +25,7 @@ public class AdminMenu {
         changeBookButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                SearchForm searchForm = new SearchForm() {
-                    @Override
-                    protected void setActionListenerForBookItem() {
-                        buttonName = "Change book";
-                        al = new ActionListener() {
-                            @Override
-                            public void actionPerformed(ActionEvent e) {
-                                // TODO: 10.05.2021 Change book form
-                            }
-                        };
-                    }
-                };
-                root.removeAll();
-                root.add(searchForm.$$$getRootComponent$$$());
-                root.updateUI();
+
             }
         });
         changeUserButton.addActionListener(new ActionListener() {

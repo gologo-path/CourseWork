@@ -7,8 +7,6 @@ import entities.Book;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class BookItem {
     private Book book;
@@ -19,7 +17,7 @@ public class BookItem {
     private JLabel publisher;
     private JLabel genre;
     private JLabel annotation;
-    private JButton button1;
+    protected JButton button1;
     private JLabel language;
     private JLabel authors;
 
@@ -43,13 +41,6 @@ public class BookItem {
         authors.setText(tmp);
     }
 
-    public void setNameButton(String name) {
-        button1.setText(name);
-    }
-
-    public void setActionListener(ActionListener listener) {
-        button1.addActionListener(listener);
-    }
 
     // TODO: 10.05.2021 print current amount of book
 
@@ -135,4 +126,7 @@ public class BookItem {
         return panel1;
     }
 
+    public Book getBook() {
+        return book;
+    }
 }
