@@ -425,4 +425,58 @@ public class MySQLManager {
             conn.close();
         }
     }
+    public HashMap<String , Integer> getAuthorBySurname(String surname) throws SQLException {
+        Connection conn = null;
+        try{
+            conn = openConnection();
+            conn.setAutoCommit(false);
+            HashMap<String, Integer> authors = new HashMap<String, Integer>();
+            Statement stm = conn.createStatement();
+            ResultSet rs = stm.executeQuery("SELECT id , CONCAT(LEFT(NAME,1),'. ',IF(fathers IS NULL,'',CONCAT(LEFT(fathers,1),'. ')), surname) AS FIO FROM author WHERE surname LIKE '%"+surname+"%'");
+            while (rs.next()){
+                authors.put(rs.getString("FIO"), Integer.valueOf(rs.getString("ID")));
+            }
+            rs.close();
+            stm.close();
+            return authors;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            conn.close();
+        }
+        return null;
+    }
+    public void changeBookAuthors(String book_id,ArrayList<Integer> ids) throws SQLException {
+        removeOldAuthors(book_id);
+        Connection conn = null;
+        try{
+            conn = openConnection();
+            conn.setAutoCommit(false);
+            Statement stm = conn.createStatement();
+            for (Integer i : ids){
+                int rs = stm.executeUpdate("INSERT INTO author_book (id_a,id_b) VALUES("+i+", '"+book_id+"')");
+            }
+            conn.commit();
+            stm.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            conn.close();
+        }
+    }
+    private void removeOldAuthors(String  book_id) throws SQLException {
+        Connection conn = null;
+        try{
+            conn = openConnection();
+            conn.setAutoCommit(false);
+            Statement stm = conn.createStatement();
+            int rs = stm.executeUpdate("DELETE FROM author_book WHERE id_b = "+book_id);
+            conn.commit();
+            stm.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            conn.close();
+        }
+    }
 }
