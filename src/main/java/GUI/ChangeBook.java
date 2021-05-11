@@ -34,7 +34,7 @@ public class ChangeBook {
         editAuthorsListButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-// TODO: 11.05.2021 own form for authors and genres
+
             }
         });
         addNewLanguage.addActionListener(new ActionListener() {
@@ -56,7 +56,7 @@ public class ChangeBook {
         editGenresListButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+// TODO: 11.05.2021 own form for authors and genres
             }
         });
         submitChangesButton.addActionListener(new ActionListener() {

@@ -365,4 +365,26 @@ public class MySQLManager {
             conn.close();
         }
     }
+
+    public HashMap<String, Integer> getAuthors() throws SQLException {
+        Connection conn = null;
+        try{
+            conn = openConnection();
+            conn.setAutoCommit(false);
+            HashMap<String, Integer> authors = new HashMap<String, Integer>();
+            Statement stm = conn.createStatement();
+            ResultSet rs = stm.executeQuery("SELECT author.id AS ID, CONCAT(LEFT(NAME,1),'. ',IF(fathers IS NULL,'',CONCAT(LEFT(fathers,1),'. ')), surname) AS FIO FROM author_book INNER JOIN author ON author_book.id_a = author.id ");
+            while (rs.next()){
+                authors.put(rs.getString("FIO"), Integer.valueOf(rs.getString("ID")));
+            }
+            rs.close();
+            stm.close();
+            return authors;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            conn.close();
+        }
+        return null;
+    }
 }
