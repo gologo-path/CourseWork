@@ -4,7 +4,6 @@ import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import database.MySQLManager;
 import entities.Book;
-import jdk.nashorn.internal.scripts.JD;
 
 import javax.swing.*;
 import java.awt.*;
@@ -27,7 +26,8 @@ public class ChangeBook {
     private JPanel root;
     private MySQLManager manager;
 
-    public ChangeBook(Book book) {
+    public ChangeBook(Book book, final Container container) {
+        final AddLanguage addAuthor = new AddLanguage();
         editAuthorsListButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -37,8 +37,8 @@ public class ChangeBook {
         addNewLanguage.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                AddAuthor addAuthor = new AddAuthor();
-
+                addAuthor.cleanFields();
+                addAuthor.setVisible(true);
 
             }
         });
