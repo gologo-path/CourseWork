@@ -4,6 +4,7 @@ import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import database.MySQLManager;
 import entities.Book;
+import jdk.nashorn.internal.scripts.JD;
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,12 +31,14 @@ public class ChangeBook {
         editAuthorsListButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+// TODO: 11.05.2021 own form for authors and genres
             }
         });
         addNewLanguage.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                AddAuthor addAuthor = new AddAuthor();
+
 
             }
         });

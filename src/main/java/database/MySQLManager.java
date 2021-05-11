@@ -290,4 +290,42 @@ public class MySQLManager {
         }
         return flag;
     }
+
+    public boolean isExistLanguage(String language) throws SQLException {
+        boolean flag = false;
+        Connection conn = null;
+        try{
+            conn = openConnection();
+            conn.setAutoCommit(false);
+            Statement stm = conn.createStatement();
+            ResultSet rs = stm.executeQuery("SELECT * FROM language WHERE language = '"+language+"'");
+            while (rs.next()){
+                flag = true;
+            }
+            rs.close();
+            stm.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            conn.close();
+        }
+        return flag;
+    }
+
+    public void addLanguage(String language) throws SQLException {
+        Connection conn = null;
+        try{
+            conn = openConnection();
+            conn.setAutoCommit(false);
+            Statement stm = conn.createStatement();
+            int rs = stm.executeUpdate("INSERT INTO language (language) VALUES('"+ language +"');");
+            System.out.println(rs);
+            conn.commit();
+            stm.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            conn.close();
+        }
+    }
 }
