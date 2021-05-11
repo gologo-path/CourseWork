@@ -60,7 +60,11 @@ public class ChangeBook {
         editGenresListButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-// TODO: 11.05.2021 own form for authors and genres
+                AddGenres addGenres = new AddGenres(book, container);
+                container.removeAll();
+                container.add(addGenres.$$$getRootComponent$$$());
+                container.setVisible(false);
+                container.setVisible(true);
             }
         });
         submitChangesButton.addActionListener(new ActionListener() {
