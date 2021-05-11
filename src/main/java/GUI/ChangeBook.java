@@ -25,9 +25,12 @@ public class ChangeBook {
     private JTextPane annotation;
     private JPanel root;
     private MySQLManager manager;
+    private Book book;
 
     public ChangeBook(Book book, final Container container) {
-        final AddLanguage addAuthor = new AddLanguage();
+        this.book = book;
+        final AddLanguage addLanguage = new AddLanguage();
+        final AddPublisher addPublisher = new AddPublisher();
         editAuthorsListButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -37,15 +40,17 @@ public class ChangeBook {
         addNewLanguage.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                addAuthor.cleanFields();
-                addAuthor.setVisible(true);
-
+                addLanguage.cleanFields();
+                addLanguage.setVisible(true);
+                updateLanguages();
             }
         });
         addNewPublisher.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                addPublisher.cleanFields();
+                addPublisher.setVisible(true);
+                updatePublishers();
             }
         });
         editGenresListButton.addActionListener(new ActionListener() {
@@ -66,6 +71,12 @@ public class ChangeBook {
         // TODO: 10.05.2021 Make something with date. I don't now what, but make.
         annotation.setText(book.getAnnotation());
         manager = new MySQLManager();
+        updateLanguages();
+        updatePublishers();
+    }
+
+    private void updateLanguages() {
+        language.removeAllItems();
         try {
             for (String st : manager.getLanguages().keySet()) {
                 language.addItem(st);
@@ -76,6 +87,10 @@ public class ChangeBook {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+    }
+
+    private void updatePublishers() {
+        publisher.removeAllItems();
         try {
             for (String st : manager.getPublishers().keySet()) {
                 publisher.addItem(st);
@@ -167,4 +182,5 @@ public class ChangeBook {
     public JComponent $$$getRootComponent$$$() {
         return root;
     }
+
 }

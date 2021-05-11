@@ -328,4 +328,41 @@ public class MySQLManager {
             conn.close();
         }
     }
+    public boolean isExistPublisher(String publisher) throws SQLException {
+        boolean flag = false;
+        Connection conn = null;
+        try{
+            conn = openConnection();
+            conn.setAutoCommit(false);
+            Statement stm = conn.createStatement();
+            ResultSet rs = stm.executeQuery("SELECT * FROM publisher WHERE name = '"+publisher+"'");
+            while (rs.next()){
+                flag = true;
+            }
+            rs.close();
+            stm.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            conn.close();
+        }
+        return flag;
+    }
+
+    public void addPublisher(String publisher) throws SQLException {
+        Connection conn = null;
+        try{
+            conn = openConnection();
+            conn.setAutoCommit(false);
+            Statement stm = conn.createStatement();
+            int rs = stm.executeUpdate("INSERT INTO publisher (name) VALUES('"+ publisher +"');");
+            System.out.println(rs);
+            conn.commit();
+            stm.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            conn.close();
+        }
+    }
 }
