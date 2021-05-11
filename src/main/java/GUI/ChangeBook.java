@@ -34,7 +34,7 @@ public class ChangeBook {
         editAuthorsListButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                AddAuthor addAuthor = new AddAuthor(book,container);
+                AddAuthor addAuthor = new AddAuthor(book, container);
                 container.removeAll();
                 container.add(addAuthor.$$$getRootComponent$$$());
                 container.setVisible(false);

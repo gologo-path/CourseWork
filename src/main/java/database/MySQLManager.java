@@ -479,4 +479,95 @@ public class MySQLManager {
             conn.close();
         }
     }
+    public void changeBookGenres(String book_id,ArrayList<Integer> ids) throws SQLException {
+        removeOldGenres(book_id);
+        Connection conn = null;
+        try{
+            conn = openConnection();
+            conn.setAutoCommit(false);
+            Statement stm = conn.createStatement();
+            for (Integer i : ids){
+                int rs = stm.executeUpdate("INSERT INTO book_genre (id_g,id_b) VALUES("+i+", '"+book_id+"')");
+            }
+            conn.commit();
+            stm.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            conn.close();
+        }
+    }
+    private void removeOldGenres(String  book_id) throws SQLException {
+        Connection conn = null;
+        try{
+            conn = openConnection();
+            conn.setAutoCommit(false);
+            Statement stm = conn.createStatement();
+            int rs = stm.executeUpdate("DELETE FROM book_genre WHERE id_b = "+book_id);
+            conn.commit();
+            stm.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            conn.close();
+        }
+    }
+    public HashMap<String , Integer> getGenreByName(String genre) throws SQLException {
+        Connection conn = null;
+        try{
+            conn = openConnection();
+            conn.setAutoCommit(false);
+            HashMap<String, Integer> genres = new HashMap<String, Integer>();
+            Statement stm = conn.createStatement();
+            ResultSet rs = stm.executeQuery("SELECT id, genre FROM genre WHERE genre LIKE '%"+genre+"%'");
+            while (rs.next()){
+                genres.put(rs.getString("genre"), Integer.valueOf(rs.getString("id")));
+            }
+            rs.close();
+            stm.close();
+            return genres;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            conn.close();
+        }
+        return null;
+    }
+    public boolean isExistGenre(String genre) throws SQLException {
+        boolean flag = false;
+        Connection conn = null;
+        try{
+            conn = openConnection();
+            conn.setAutoCommit(false);
+            HashMap<String, Integer> genres = new HashMap<String, Integer>();
+            Statement stm = conn.createStatement();
+            ResultSet rs = stm.executeQuery("SELECT id, genre FROM genre WHERE genre = '"+genre+"'");
+            while (rs.next()){
+                flag = true;
+            }
+            rs.close();
+            stm.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            conn.close();
+        }
+        return flag;
+    }
+    public void addGenre(String genre) throws SQLException {
+        Connection conn = null;
+        try{
+            conn = openConnection();
+            conn.setAutoCommit(false);
+            Statement stm = conn.createStatement();
+            int rs = stm.executeUpdate("INSERT INTO genre (genre) VALUES('"+genre+"')");
+            System.out.println(rs);
+            conn.commit();
+            stm.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            conn.close();
+        }
+    }
 }
