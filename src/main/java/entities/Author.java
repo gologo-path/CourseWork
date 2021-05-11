@@ -16,6 +16,11 @@ public class Author implements Serializable {
             this.surname = surname;
             this.fathers = fathers;
         }
+        public Author(String name, String surname, String fathers){
+            this.name = name;
+            this.surname = surname;
+            this.fathers = fathers;
+        }
         public void setName(String name) {
             this.name = name;
         }

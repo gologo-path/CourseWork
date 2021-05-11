@@ -27,14 +27,18 @@ public class ChangeBook {
     private MySQLManager manager;
     private Book book;
 
-    public ChangeBook(Book book, final Container container) {
+    public ChangeBook(final Book book, final Container container) {
         this.book = book;
         final AddLanguage addLanguage = new AddLanguage();
         final AddPublisher addPublisher = new AddPublisher();
         editAuthorsListButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                AddAuthor addAuthor = new AddAuthor(book.getAuthors());
+                container.removeAll();
+                container.add(addAuthor.$$$getRootComponent$$$());
+                container.setVisible(false);
+                container.setVisible(true);
             }
         });
         addNewLanguage.addActionListener(new ActionListener() {

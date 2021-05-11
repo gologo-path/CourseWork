@@ -1,5 +1,6 @@
 package database;
 
+import entities.Author;
 import entities.Book;
 import entities.User;
 
@@ -373,7 +374,7 @@ public class MySQLManager {
             conn.setAutoCommit(false);
             HashMap<String, Integer> authors = new HashMap<String, Integer>();
             Statement stm = conn.createStatement();
-            ResultSet rs = stm.executeQuery("SELECT author.id AS ID, CONCAT(LEFT(NAME,1),'. ',IF(fathers IS NULL,'',CONCAT(LEFT(fathers,1),'. ')), surname) AS FIO FROM author_book INNER JOIN author ON author_book.id_a = author.id ");
+            ResultSet rs = stm.executeQuery("SELECT author.id AS ID, CONCAT(LEFT(NAME,1),'. ',IF(fathers IS NULL,'',CONCAT(LEFT(fathers,1),'. ')), surname) AS FIO FROM author");
             while (rs.next()){
                 authors.put(rs.getString("FIO"), Integer.valueOf(rs.getString("ID")));
             }
@@ -386,5 +387,42 @@ public class MySQLManager {
             conn.close();
         }
         return null;
+    }
+    public boolean isExistAuthor(Author author) throws SQLException {
+        Connection conn = null;
+        boolean flag = false;
+        try{
+            conn = openConnection();
+            conn.setAutoCommit(false);
+            ArrayList<Author> authors = new ArrayList<Author>();
+            Statement stm = conn.createStatement();
+            ResultSet rs = stm.executeQuery("SELECT id, name, surname, fathers  FROM author WHERE name = '"+author.getName()+"' AND surname = '"+author.getSurname()+"' AND fathers = '"+author.getFathers()+"'");
+            while (rs.next()){
+                flag = true;
+            }
+            rs.close();
+            stm.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            conn.close();
+        }
+        return flag;
+    }
+    public void addAuthor(Author author) throws SQLException {
+        Connection conn = null;
+        try{
+            conn = openConnection();
+            conn.setAutoCommit(false);
+            Statement stm = conn.createStatement();
+            int rs = stm.executeUpdate("INSERT INTO author (name,surname,fathers) VALUES('"+ author.getName()+ ", "+ author.getSurname()+ ", "+ author.getFathers() +"');");
+            System.out.println(rs);
+            conn.commit();
+            stm.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            conn.close();
+        }
     }
 }
