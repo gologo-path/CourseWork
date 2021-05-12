@@ -10,6 +10,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.util.HashMap;
 
 public class ChangeBook {
     private JButton submitChangesButton;
@@ -70,7 +71,29 @@ public class ChangeBook {
         submitChangesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                book.setIsbn(isbn.getText());
+                book.setAnnotation(annotation.getText());
+                book.setLanguage(new HashMap<String, Integer>(){{
+                    try {
+                        put((String) language.getSelectedItem(),manager.getLanguages().get(language.getSelectedItem()));
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
+                }});
+                book.setName(name.getText());
+                book.setYear(year.getText());
+                book.setPublisher(new HashMap<String, Integer>(){{
+                    try {
+                        put((String) publisher.getSelectedItem(),manager.getPublishers().get(publisher.getSelectedItem()));
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
+                }});
+                try {
+                    manager.changeBook(book);
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
             }
         });
         name.setText(book.getName());

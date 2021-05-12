@@ -435,7 +435,6 @@ public class MySQLManager {
             ResultSet rs = stm.executeQuery("SELECT id , CONCAT(LEFT(NAME,1),'. ',IF(fathers IS NULL,'',CONCAT(LEFT(fathers,1),'. ')), surname) AS FIO FROM author WHERE surname LIKE '"+surname+"%'");
             while (rs.next()){
                 authors.put(rs.getString("FIO"), Integer.valueOf(rs.getString("ID")));
-                System.out.println("author");
             }
             rs.close();
             stm.close();
@@ -563,6 +562,24 @@ public class MySQLManager {
             Statement stm = conn.createStatement();
             int rs = stm.executeUpdate("INSERT INTO genre (genre) VALUES('"+genre+"')");
             System.out.println(rs);
+            conn.commit();
+            stm.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            conn.close();
+        }
+    }
+
+    public void changeBook(Book book) throws SQLException {
+        Connection conn = null;
+        try{
+            conn = openConnection();
+            conn.setAutoCommit(false);
+            Statement stm = conn.createStatement();
+            int rs = stm.executeUpdate("UPDATE book SET isbn = '"+book.getIsbn()+"', name = '"+book.getName()+"', " +
+                    "year = "+book.getYear()+", id_publisher = "+book.getPublisher().get(book.getPublisher().keySet().iterator().next())+", " +
+                    "id_language = "+book.getLanguage().get(book.getLanguage().keySet().iterator().next())+", annotation = '"+book.getAnnotation()+"'");
             conn.commit();
             stm.close();
         } catch (SQLException throwables) {

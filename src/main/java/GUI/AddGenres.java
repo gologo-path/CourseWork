@@ -34,8 +34,10 @@ public class AddGenres {
     public AddGenres(final Book book, final Container container) {
         items.setLayout(new GridLayout(0, 1, 0, 20));
         manager = new MySQLManager();
-        this.checked = (ArrayList<String>) book.getGenres().keySet();
-        this.visible = (ArrayList<String>) book.getGenres().keySet();
+        checked = new ArrayList<String>();
+        visible = new ArrayList<String>();
+        this.checked.addAll(book.getGenres().keySet());
+        this.visible.addAll(book.getGenres().keySet());
         printVisible();
 
         addNewButton.addActionListener(new ActionListener() {
@@ -71,8 +73,8 @@ public class AddGenres {
                 container.removeAll();
                 ChangeBook changeBook = new ChangeBook(book, container);
                 container.add(changeBook.$$$getRootComponent$$$());
-                container.setVisible(true);
                 container.setVisible(false);
+                container.setVisible(true);
             }
         });
         onlySelectedButton.addActionListener(new ActionListener() {
@@ -81,8 +83,8 @@ public class AddGenres {
                 visible.clear();
                 visible.addAll(checked);
                 printVisible();
-                container.setVisible(true);
                 container.setVisible(false);
+                container.setVisible(true);
             }
         });
         searchButton.addActionListener(new ActionListener() {
@@ -90,10 +92,13 @@ public class AddGenres {
             public void actionPerformed(ActionEvent e) {
                 visible.clear();
                 try {
-                    visible = (ArrayList<String>) manager.getGenreByName(textField1.getText()).keySet();
+                    visible.addAll(manager.getGenreByName(textField1.getText()).keySet());
                 } catch (SQLException throwables) {
                     throwables.printStackTrace();
                 }
+                printVisible();
+                container.setVisible(false);
+                container.setVisible(true);
             }
         });
     }

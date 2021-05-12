@@ -54,4 +54,32 @@ public class Book implements Serializable {
     public HashMap <String, Integer> getAuthors() {
         return authors;
     }
+
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
+    }
+
+    public void setAnnotation(String annotation) {
+        this.annotation = annotation;
+    }
+
+    public void setLanguage(HashMap<String, Integer> language) {
+        this.language = language;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public void setPublisher(HashMap<String, Integer> publisher) {
+        this.publisher = publisher;
+    }
 }
