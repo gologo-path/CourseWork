@@ -6,6 +6,8 @@ import database.MySQLManager;
 import entities.Book;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -26,6 +28,9 @@ public class ChangeBook implements ICommonGuiClass {
     private JButton editGenresListButton;
     private JTextPane annotation;
     private JPanel root;
+    private JTextField location;
+    private JSpinner amount;
+    private JSpinner total;
     private MySQLManager manager;
     private Book book;
     private ArrayList<Integer> ids_a;
@@ -33,6 +38,8 @@ public class ChangeBook implements ICommonGuiClass {
     private String lastIsbn;
     private AddAuthor addAuthor;
     private AddGenres addGenres;
+    private SpinnerNumberModel amountModel;
+    private SpinnerNumberModel totalModel;
 
     public ChangeBook(final Book book, final Container container) {
         this.book = book;
@@ -98,6 +105,7 @@ public class ChangeBook implements ICommonGuiClass {
                         throwables.printStackTrace();
                     }
                 }});
+                book.setLocation(location.getText());
                 try {
                     manager.changeBook(book, lastIsbn);
                 } catch (SQLException throwables) {
@@ -113,11 +121,40 @@ public class ChangeBook implements ICommonGuiClass {
                 } catch (SQLException throwables) {
                     throwables.printStackTrace();
                 }
+                try {
+                    manager.changeAmountTotal(book.getIsbn(),new HashMap<String, Integer>(){{
+                        put("current_amount", (Integer) amount.getValue());
+                        put("amount", (Integer) total.getValue());
+                    }});
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
             }
         });
         name.setText(book.getName());
         isbn.setText(book.getIsbn());
         year.setText(book.getYear());
+        location.setText(book.getLocation());
+
+        HashMap<String ,Integer> amounts = null;
+        try {
+            amounts = manager.getAmountTotal(book.getIsbn());
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        amountModel = new SpinnerNumberModel(amounts.get("current_amount").intValue(),0,amounts.get("amount").intValue(),1);
+        amount.setModel(amountModel);
+        totalModel = new SpinnerNumberModel(amounts.get("amount").intValue(),1,Integer.MAX_VALUE,1);
+        total.setModel(totalModel);
+
+        total.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                amountModel.setMaximum((Integer) total.getValue());
+            }
+        });
+
         // TODO: 10.05.2021 Make something with date. I don't now what, but make.
         annotation.setText(book.getAnnotation());
         manager = new MySQLManager();
@@ -171,7 +208,7 @@ public class ChangeBook implements ICommonGuiClass {
         root = new JPanel();
         root.setLayout(new GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
         final JPanel panel1 = new JPanel();
-        panel1.setLayout(new GridLayoutManager(8, 3, new Insets(0, 0, 0, 0), -1, -1));
+        panel1.setLayout(new GridLayoutManager(10, 3, new Insets(0, 0, 0, 0), -1, -1));
         root.add(panel1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final JLabel label1 = new JLabel();
         label1.setText("Name");
@@ -187,7 +224,7 @@ public class ChangeBook implements ICommonGuiClass {
         panel1.add(label4, new GridConstraints(6, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JLabel label5 = new JLabel();
         label5.setText("Annotation");
-        panel1.add(label5, new GridConstraints(7, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel1.add(label5, new GridConstraints(9, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JLabel label6 = new JLabel();
         label6.setText("ISBN");
         panel1.add(label6, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
@@ -220,7 +257,19 @@ public class ChangeBook implements ICommonGuiClass {
         editGenresListButton.setText("Edit genres list");
         panel1.add(editGenresListButton, new GridConstraints(6, 1, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         annotation = new JTextPane();
-        panel1.add(annotation, new GridConstraints(7, 1, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(150, 50), null, 0, false));
+        panel1.add(annotation, new GridConstraints(9, 1, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(150, 50), null, 0, false));
+        final JLabel label9 = new JLabel();
+        label9.setText("Location");
+        panel1.add(label9, new GridConstraints(7, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        location = new JTextField();
+        panel1.add(location, new GridConstraints(7, 1, 1, 2, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        final JLabel label10 = new JLabel();
+        label10.setText("amount/total amount");
+        panel1.add(label10, new GridConstraints(8, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        amount = new JSpinner();
+        panel1.add(amount, new GridConstraints(8, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        total = new JSpinner();
+        panel1.add(total, new GridConstraints(8, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         submitChangesButton = new JButton();
         submitChangesButton.setText("Submit changes");
         root.add(submitChangesButton, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));

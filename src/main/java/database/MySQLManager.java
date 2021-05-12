@@ -1,5 +1,6 @@
 package database;
 
+import com.sun.org.apache.xalan.internal.xsltc.dom.SimpleResultTreeImpl;
 import entities.Author;
 import entities.Book;
 import entities.User;
@@ -585,6 +586,81 @@ public class MySQLManager {
                     "year = "+book.getYear()+", id_publisher = "+book.getPublisher().get(book.getPublisher().keySet().iterator().next())+", " +
                     "id_language = "+book.getLanguage().get(book.getLanguage().keySet().iterator().next())+", annotation = '"+book.getAnnotation()+"'" +
                     "WHERE isbn = '"+lastIsbn+"'");
+            conn.commit();
+            stm.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            conn.close();
+        }
+    }
+
+    public void addBool(Book book) throws SQLException {
+        Connection conn = null;
+        try{
+            conn = openConnection();
+            conn.setAutoCommit(false);
+            Statement stm = conn.createStatement();
+            int rs = stm.executeUpdate("INSERT INTO book (isbn,name,year,id_publisher,id_language,annotation,location)" +
+                    "VALUES ('"+book.getIsbn()+"','"+book.getName()+"',"+book.getYear()+", "+book.getPublisher().get(book.getPublisher().keySet().iterator().next())+", "+
+                    book.getLanguage().get(book.getLanguage().keySet().iterator().next())+", '"+ book.getAnnotation() +"', '"+ book.getLocation() +"')");
+            conn.commit();
+            stm.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            conn.close();
+        }
+    }
+    public HashMap<String , Integer> getAmountTotal(String isbn) throws SQLException {
+        Connection conn = null;
+        try{
+            conn = openConnection();
+            conn.setAutoCommit(false);
+            HashMap<String, Integer> amounts = new HashMap<String, Integer>();
+            Statement stm = conn.createStatement();
+            ResultSet rs = stm.executeQuery("SELECT current_amount, amount FROM number_of_books WHERE isbn = '"+isbn+"'");
+            while (rs.next()){
+                amounts.put("current_amount", Integer.valueOf(rs.getString("current_amount")));
+                amounts.put("amount", Integer.valueOf(rs.getString("amount")));
+            }
+            rs.close();
+            stm.close();
+            return amounts;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            conn.close();
+        }
+        return null;
+    }
+
+    public void addAmountTotal(String isbn,HashMap<String , Integer> amounts) throws SQLException {
+        Connection conn = null;
+        try{
+            conn = openConnection();
+            conn.setAutoCommit(false);
+            Statement stm = conn.createStatement();
+            int rs = stm.executeUpdate("INSERT INTO number_of_books (isbn,amount,current_amount) VALUES('"+isbn+"'" +
+                    ", "+amounts.get("amount")+", "+amounts.get("current_amount")+")");
+            conn.commit();
+            stm.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            conn.close();
+        }
+    }
+
+    public void changeAmountTotal(String isbn,HashMap<String , Integer> amounts) throws SQLException {
+        Connection conn = null;
+        try{
+            conn = openConnection();
+            conn.setAutoCommit(false);
+            Statement stm = conn.createStatement();
+            int rs = stm.executeUpdate("UPDATE number_of_books SET" +
+                    " amount = '" +amounts.get("amount")+"', current_amount = '"+amounts.get("current_amount")+"' " +
+                    "WHERE isbn = '"+isbn+"'");
             conn.commit();
             stm.close();
         } catch (SQLException throwables) {

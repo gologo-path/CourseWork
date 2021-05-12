@@ -13,6 +13,7 @@ public class Book implements Serializable {
     protected String annotation;
     protected HashMap <String, Integer> genres;
     protected HashMap <String, Integer> authors;
+    protected HashMap <String, Integer> amounts;
 
     public Book(String isbn, String name, String year, HashMap <String, Integer> language, HashMap <String, Integer> publisher, String location, String annotation){
         this.isbn = isbn;
@@ -61,6 +62,9 @@ public class Book implements Serializable {
     public HashMap <String, Integer> getAuthors() {
         return authors;
     }
+    public String getLocation() {
+        return location;
+    }
 
     public void setIsbn(String isbn) {
         this.isbn = isbn;
@@ -88,5 +92,13 @@ public class Book implements Serializable {
 
     public void setPublisher(HashMap<String, Integer> publisher) {
         this.publisher = publisher;
+    }
+
+    public HashMap<String, Integer> getAmounts() {
+        return amounts;
+    }
+
+    public void setAmounts(HashMap<String, Integer> amounts) {
+        this.amounts = amounts;
     }
 }
