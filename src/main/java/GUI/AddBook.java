@@ -149,7 +149,6 @@ public class AddBook implements ICommonGuiClass {
             }
         });
 
-        // TODO: 12.05.2021 amount / total 
         location.setText(book.getLocation());
         // TODO: 10.05.2021 Make something with date. I don't now what, but make.
         annotation.setText(book.getAnnotation());

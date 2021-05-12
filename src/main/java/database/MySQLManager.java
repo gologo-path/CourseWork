@@ -177,6 +177,7 @@ public class MySQLManager {
                         new HashMap<String, Integer>(){{put(rs.getString("language"), Integer.valueOf(rs.getString("id_l")));}},new HashMap<String, Integer>(){{put(rs.getString("publisher"), Integer.valueOf(rs.getString("id_p")));}},rs.getString("location"),rs.getString("annotation"));
                 b.setGenres(this.getGenresByIsbn(rs.getString("isbn")));
                 b.setAuthors(this.getAuthorsByIsbn(rs.getString("isbn")));
+                b.setAmounts(this.getAmountTotal(rs.getString("isbn")));
                 books.add(b);
             }
             rs.close();
