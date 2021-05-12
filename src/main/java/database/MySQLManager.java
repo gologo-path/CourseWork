@@ -670,4 +670,25 @@ public class MySQLManager {
             conn.close();
         }
     }
+    public void changeUser(User user) throws SQLException {
+        Connection conn = null;
+        try{
+            conn = openConnection();
+            conn.setAutoCommit(false);
+            Statement stm = conn.createStatement();
+            if (user.getFathers() != null) {
+                int rs = stm.executeUpdate("UPDATE user SET name = '" + user.getName() + "', surname = '" + user.getSurname()
+                        + "', fathers = '" + user.getFathers() + "', email = '" + user.getEmail() + "' WHERE id = " + user.getId());
+            }else{
+                int rs = stm.executeUpdate("UPDATE user SET name = '" + user.getName() + "', surname = '" + user.getSurname()
+                        + "', fathers = NULL, email = '" + user.getEmail() + "' WHERE id = " + user.getId());
+            }
+                conn.commit();
+            stm.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            conn.close();
+        }
+    }
 }

@@ -69,4 +69,16 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public void setFathers(String fathers) {
+        this.fathers = fathers;
+    }
 }
