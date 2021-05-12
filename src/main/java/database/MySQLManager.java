@@ -691,4 +691,20 @@ public class MySQLManager {
             conn.close();
         }
     }
+    public void addBookUser(int id,String isbn) throws SQLException {
+        Connection conn = null;
+        try{
+            conn = openConnection();
+            conn.setAutoCommit(false);
+            Statement stm = conn.createStatement();
+            int rs = stm.executeUpdate("INSERT INTO book_user (id_b,id_u,date_start,date_finish VALUES('"+isbn+"' " +
+                    id+" NOW(), DATE_ADD(NOW(),INTERVAL 10 DAY)))");
+            conn.commit();
+            stm.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            conn.close();
+        }
+    }
 }
