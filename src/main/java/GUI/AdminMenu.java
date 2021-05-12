@@ -19,7 +19,10 @@ public class AdminMenu {
         addBookButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // TODO: 10.05.2021 add book form. May be like change book form, but without auto input 
+                AddBook addBook = new AddBook(AdminMenu.this.$$$getRootComponent$$$().getParent().getParent());
+                root.removeAll();
+                root.add(addBook.$$$getRootComponent$$$());
+                root.updateUI();
             }
         });
         changeBookButton.addActionListener(new ActionListener() {

@@ -415,8 +415,11 @@ public class MySQLManager {
             conn = openConnection();
             conn.setAutoCommit(false);
             Statement stm = conn.createStatement();
-            int rs = stm.executeUpdate("INSERT INTO author (name,surname,fathers) VALUES('"+ author.getName()+ ", "+ author.getSurname()+ ", "+ author.getFathers() +"');");
-            System.out.println(rs);
+            if (author.getFathers() != null) {
+                int rs = stm.executeUpdate("INSERT INTO author (name,surname,fathers) VALUES('" + author.getName() + "', '" + author.getSurname() + "', '" + author.getFathers() + "');");
+            }else {
+                int rs = stm.executeUpdate("INSERT INTO author (name,surname,fathers) VALUES('" + author.getName() + "', '" + author.getSurname() + "', NULL );");
+            }
             conn.commit();
             stm.close();
         } catch (SQLException throwables) {

@@ -13,7 +13,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class AddBook implements ICommonGuiClass{
+public class AddBook implements ICommonGuiClass {
     private JButton submitChangesButton;
     private JTextField name;
     private JTextField isbn;
@@ -28,15 +28,19 @@ public class AddBook implements ICommonGuiClass{
     private JPanel root;
     private MySQLManager manager;
     private Book book;
+    private AddAuthor addAuthor;
+    private AddGenres addGenres;
 
-    public AddBook(final Book book, final Container container) {
-        this.book = book;
+
+    public AddBook(final Container container) {
+        this.book = new Book();
         final AddLanguage addLanguage = new AddLanguage();
         final AddPublisher addPublisher = new AddPublisher();
+        addAuthor = new AddAuthor(book, container, new ArrayList<Integer>(), this);
+        addGenres = new AddGenres(book, container, new ArrayList<Integer>(), this);
         editAuthorsListButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                AddAuthor addAuthor = new AddAuthor(book, container, new ArrayList<Integer>(), null);
                 container.removeAll();
                 container.add(addAuthor.$$$getRootComponent$$$());
                 container.setVisible(false);
@@ -62,7 +66,7 @@ public class AddBook implements ICommonGuiClass{
         editGenresListButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                AddGenres addGenres = new AddGenres(book, container, new ArrayList<Integer>(), null);
+
                 container.removeAll();
                 container.add(addGenres.$$$getRootComponent$$$());
                 container.setVisible(false);
@@ -90,6 +94,7 @@ public class AddBook implements ICommonGuiClass{
                         throwables.printStackTrace();
                     }
                 }});
+
             }
         });
         name.setText(book.getName());
@@ -107,8 +112,10 @@ public class AddBook implements ICommonGuiClass{
         try {
             for (String st : manager.getLanguages().keySet()) {
                 language.addItem(st);
-                if (st.equals(book.getLanguage().keySet().iterator().next())) {
-                    language.setSelectedItem(st);
+                if (book.getLanguage().keySet().iterator().hasNext()) {
+                    if (st.equals(book.getLanguage().keySet().iterator().next())) {
+                        language.setSelectedItem(st);
+                    }
                 }
             }
         } catch (SQLException throwables) {
@@ -121,8 +128,10 @@ public class AddBook implements ICommonGuiClass{
         try {
             for (String st : manager.getPublishers().keySet()) {
                 publisher.addItem(st);
-                if (st.equals(book.getPublisher().keySet().iterator().next())) {
-                    publisher.setSelectedItem(st);
+                if (book.getPublisher().keySet().iterator().hasNext()) {
+                    if (st.equals(book.getPublisher().keySet().iterator().next())) {
+                        publisher.setSelectedItem(st);
+                    }
                 }
             }
         } catch (SQLException throwables) {

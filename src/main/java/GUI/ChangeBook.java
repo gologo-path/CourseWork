@@ -34,7 +34,7 @@ public class ChangeBook implements ICommonGuiClass {
     private AddAuthor addAuthor;
     private AddGenres addGenres;
 
-    public ChangeBook(final Book book, final Container container){
+    public ChangeBook(final Book book, final Container container) {
         this.book = book;
         lastIsbn = book.getIsbn();
         ids_a = new ArrayList<Integer>();

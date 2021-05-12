@@ -19,7 +19,11 @@ public class Author implements Serializable {
         public Author(String name, String surname, String fathers){
             this.name = name;
             this.surname = surname;
-            this.fathers = fathers;
+            if (!fathers.isEmpty()) {
+                this.fathers = fathers;
+            }else {
+                this.fathers = null;
+            }
         }
         public void setName(String name) {
             this.name = name;

@@ -110,7 +110,6 @@ public class AddAuthor {
                     switch (e.getStateChange()) {
                         case ItemEvent.SELECTED:
                             checked.add((String) e.getItem());
-                            System.out.println("Checked size" + checked.size());
                             break;
                         case ItemEvent.DESELECTED:
                             checked.remove(e.getItem());

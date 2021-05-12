@@ -24,6 +24,13 @@ public class Book implements Serializable {
         this.annotation = annotation;
     }
 
+    public Book() {
+        language = new HashMap<String, Integer>();
+        publisher = new HashMap<String, Integer>();
+        genres = new HashMap<String, Integer>();
+        authors = new HashMap<String, Integer>();
+    }
+
     public String getIsbn() {
         return isbn;
     }
