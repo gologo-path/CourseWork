@@ -447,6 +447,7 @@ public class MySQLManager {
         return null;
     }
     public void changeBookAuthors(String book_id,ArrayList<Integer> ids) throws SQLException {
+        System.out.println(ids.size());
         removeOldAuthors(book_id);
         Connection conn = null;
         try{
@@ -571,7 +572,7 @@ public class MySQLManager {
         }
     }
 
-    public void changeBook(Book book) throws SQLException {
+    public void changeBook(Book book, String lastIsbn) throws SQLException {
         Connection conn = null;
         try{
             conn = openConnection();
@@ -579,7 +580,8 @@ public class MySQLManager {
             Statement stm = conn.createStatement();
             int rs = stm.executeUpdate("UPDATE book SET isbn = '"+book.getIsbn()+"', name = '"+book.getName()+"', " +
                     "year = "+book.getYear()+", id_publisher = "+book.getPublisher().get(book.getPublisher().keySet().iterator().next())+", " +
-                    "id_language = "+book.getLanguage().get(book.getLanguage().keySet().iterator().next())+", annotation = '"+book.getAnnotation()+"'");
+                    "id_language = "+book.getLanguage().get(book.getLanguage().keySet().iterator().next())+", annotation = '"+book.getAnnotation()+"'" +
+                    "WHERE isbn = '"+lastIsbn+"'");
             conn.commit();
             stm.close();
         } catch (SQLException throwables) {

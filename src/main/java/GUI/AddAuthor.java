@@ -32,7 +32,7 @@ public class AddAuthor {
     private ArrayList<String> checked;
     private HashMap<String, Integer> allAuthors;
 
-    public AddAuthor(final Book book, final Container container) {
+    public AddAuthor(final Book book, final Container container, final ArrayList<Integer> ids, final ChangeBook changeBook) {
         items.setLayout(new GridLayout(0, 1, 0, 20));
         checked = new ArrayList<String>();
         visible = new ArrayList<String>();
@@ -52,27 +52,23 @@ public class AddAuthor {
         saveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                ids.clear();
                 try {
                     allAuthors = manager.getAuthors();
                 } catch (SQLException throwables) {
                     throwables.printStackTrace();
                 }
-                ArrayList<Integer> ids = new ArrayList<Integer>();
                 for (String selected : checked) {
                     ids.add(allAuthors.get(selected));
                 }
-                try {
-                    manager.changeBookAuthors(book.getIsbn(), ids);
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
-                }
+                System.out.println(ids.size());
+
             }
         });
         cancelButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 container.removeAll();
-                ChangeBook changeBook = new ChangeBook(book, container);
                 container.add(changeBook.$$$getRootComponent$$$());
                 container.setVisible(false);
                 container.setVisible(true);
@@ -114,6 +110,7 @@ public class AddAuthor {
                     switch (e.getStateChange()) {
                         case ItemEvent.SELECTED:
                             checked.add((String) e.getItem());
+                            System.out.println("Checked size" + checked.size());
                             break;
                         case ItemEvent.DESELECTED:
                             checked.remove(e.getItem());

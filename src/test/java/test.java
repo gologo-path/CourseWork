@@ -5,9 +5,9 @@ import GUI.SearchForm;
 import entities.User;
 
 import javax.swing.*;
+import java.util.ArrayList;
 
 public class test {
-    static User user;
     public static void main(String[] args) {
         new MainFrame();
     }
