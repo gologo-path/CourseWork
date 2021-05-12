@@ -13,7 +13,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ChangeBook {
+public class ChangeBook implements ICommonGuiClass {
     private JButton submitChangesButton;
     private JTextField name;
     private JTextField isbn;
@@ -34,7 +34,7 @@ public class ChangeBook {
     private AddAuthor addAuthor;
     private AddGenres addGenres;
 
-    public ChangeBook(final Book book, final Container container) {
+    public ChangeBook(final Book book, final Container container){
         this.book = book;
         lastIsbn = book.getIsbn();
         ids_a = new ArrayList<Integer>();

@@ -31,7 +31,7 @@ public class AddGenres {
     private ArrayList<String> checked;
     private HashMap<String, Integer> allAuthors;
 
-    public AddGenres(final Book book, final Container container, final ArrayList<Integer> ids, final ChangeBook changeBook) {
+    public AddGenres(final Book book, final Container container, final ArrayList<Integer> ids, final ICommonGuiClass parent) {
         items.setLayout(new GridLayout(0, 1, 0, 20));
         manager = new MySQLManager();
         checked = new ArrayList<String>();
@@ -65,7 +65,7 @@ public class AddGenres {
             @Override
             public void actionPerformed(ActionEvent e) {
                 container.removeAll();
-                container.add(changeBook.$$$getRootComponent$$$());
+                container.add(parent.$$$getRootComponent$$$());
                 container.setVisible(false);
                 container.setVisible(true);
             }

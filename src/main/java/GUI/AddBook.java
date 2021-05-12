@@ -13,7 +13,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class AddBook {
+public class AddBook implements ICommonGuiClass{
     private JButton submitChangesButton;
     private JTextField name;
     private JTextField isbn;
