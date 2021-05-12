@@ -14,7 +14,9 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Set;
 
 public class AddAuthor {
     private JPanel panel1;
@@ -32,9 +34,11 @@ public class AddAuthor {
 
     public AddAuthor(final Book book, final Container container) {
         items.setLayout(new GridLayout(0, 1, 0, 20));
+        checked = new ArrayList<String>();
+        visible = new ArrayList<String>();
         manager = new MySQLManager();
-        this.checked = (ArrayList<String>) book.getAuthors().keySet();
-        this.visible = (ArrayList<String>) book.getAuthors().keySet();
+        checked.addAll(book.getAuthors().keySet());
+        visible.addAll(book.getAuthors().keySet());
         printVisible();
 
         addNewButton.addActionListener(new ActionListener() {
@@ -70,8 +74,8 @@ public class AddAuthor {
                 container.removeAll();
                 ChangeBook changeBook = new ChangeBook(book, container);
                 container.add(changeBook.$$$getRootComponent$$$());
-                container.setVisible(true);
                 container.setVisible(false);
+                container.setVisible(true);
             }
         });
         onlySelectedButton.addActionListener(new ActionListener() {
@@ -80,8 +84,8 @@ public class AddAuthor {
                 visible.clear();
                 visible.addAll(checked);
                 printVisible();
-                container.setVisible(true);
                 container.setVisible(false);
+                container.setVisible(true);
             }
         });
         searchButton.addActionListener(new ActionListener() {
@@ -89,10 +93,13 @@ public class AddAuthor {
             public void actionPerformed(ActionEvent e) {
                 visible.clear();
                 try {
-                    visible = (ArrayList<String>) manager.getAuthorBySurname(textField1.getText()).keySet();
+                    visible.addAll(manager.getAuthorBySurname(textField1.getText()).keySet());
                 } catch (SQLException throwables) {
                     throwables.printStackTrace();
                 }
+                printVisible();
+                container.setVisible(false);
+                container.setVisible(true);
             }
         });
     }

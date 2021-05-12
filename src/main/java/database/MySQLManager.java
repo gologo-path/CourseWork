@@ -432,9 +432,10 @@ public class MySQLManager {
             conn.setAutoCommit(false);
             HashMap<String, Integer> authors = new HashMap<String, Integer>();
             Statement stm = conn.createStatement();
-            ResultSet rs = stm.executeQuery("SELECT id , CONCAT(LEFT(NAME,1),'. ',IF(fathers IS NULL,'',CONCAT(LEFT(fathers,1),'. ')), surname) AS FIO FROM author WHERE surname LIKE '%"+surname+"%'");
+            ResultSet rs = stm.executeQuery("SELECT id , CONCAT(LEFT(NAME,1),'. ',IF(fathers IS NULL,'',CONCAT(LEFT(fathers,1),'. ')), surname) AS FIO FROM author WHERE surname LIKE '"+surname+"%'");
             while (rs.next()){
                 authors.put(rs.getString("FIO"), Integer.valueOf(rs.getString("ID")));
+                System.out.println("author");
             }
             rs.close();
             stm.close();
@@ -519,7 +520,7 @@ public class MySQLManager {
             conn.setAutoCommit(false);
             HashMap<String, Integer> genres = new HashMap<String, Integer>();
             Statement stm = conn.createStatement();
-            ResultSet rs = stm.executeQuery("SELECT id, genre FROM genre WHERE genre LIKE '%"+genre+"%'");
+            ResultSet rs = stm.executeQuery("SELECT id, genre FROM genre WHERE genre LIKE '"+genre+"%'");
             while (rs.next()){
                 genres.put(rs.getString("genre"), Integer.valueOf(rs.getString("id")));
             }
