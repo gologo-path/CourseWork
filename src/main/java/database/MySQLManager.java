@@ -707,4 +707,19 @@ public class MySQLManager {
             conn.close();
         }
     }
+    public void removeBookUser(int id, String isbn) throws SQLException {
+        Connection conn = null;
+        try{
+            conn = openConnection();
+            conn.setAutoCommit(false);
+            Statement stm = conn.createStatement();
+            int rs = stm.executeUpdate("DELETE FROM book_user WHERE id_b = '"+isbn+"' AND id_u = "+id);
+            conn.commit();
+            stm.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            conn.close();
+        }
+    }
 }
