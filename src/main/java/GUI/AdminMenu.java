@@ -37,7 +37,10 @@ public class AdminMenu {
         changeUserButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // TODO: 10.05.2021 user list with searching, may seems like SearchForm for books but with users 
+                SearchUser searchUser = new SearchUser();
+                root.removeAll();
+                root.add(searchUser.$$$getRootComponent$$$());
+                root.updateUI();
             }
         });
     }

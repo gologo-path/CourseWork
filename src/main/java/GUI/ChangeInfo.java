@@ -56,17 +56,7 @@ public class ChangeInfo {
             emailError.setText("Invalid email");
             emailError.setVisible(true);
         } else {
-            MySQLManager manager = new MySQLManager();
-            try {
-                if (manager.isEmailRegistered(email.getText())) {
-                    emailError.setText("Email already exist");
-                    emailError.setVisible(true);
-                } else {
-                    return true;
-                }
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
+            return true;
         }
         return false;
     }

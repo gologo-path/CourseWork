@@ -50,6 +50,7 @@ public class ChangeBook implements ICommonGuiClass {
         final AddPublisher addPublisher = new AddPublisher();
         addAuthor = new AddAuthor(book, container, ids_a, this);
         addGenres = new AddGenres(book, container, ids_g, this);
+        manager = new MySQLManager();
         editAuthorsListButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -136,9 +137,9 @@ public class ChangeBook implements ICommonGuiClass {
         year.setText(book.getYear());
         location.setText(book.getLocation());
 
-        HashMap<String, Integer> amounts = null;
+        HashMap<String, Integer> amounts = new HashMap<String, Integer>();
         try {
-            amounts = manager.getAmountTotal(book.getIsbn());
+            amounts.putAll(manager.getAmountTotal(book.getIsbn()));
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
