@@ -6,6 +6,7 @@ import com.intellij.uiDesigner.core.Spacer;
 import database.MySQLManager;
 import database.SQLBuilder;
 import entities.Book;
+import entities.User;
 
 import javax.swing.*;
 import java.awt.*;
@@ -28,8 +29,8 @@ public class MyBooks {
     private MySQLManager manager;
     private int userId;
 
-    public MyBooks(int user) {
-        this.userId = user;
+    public MyBooks(final User user1) {
+        this.userId = user1.getId();
         manager = new MySQLManager();
         resultPanel.setLayout(new GridLayout(0, 1, 0, 20));
         searchButton.addActionListener(new ActionListener() {
@@ -40,7 +41,7 @@ public class MyBooks {
                     ArrayList<Book> books = manager.getByRequest(new SQLBuilder((String) comboBox1.getSelectedItem(), (String) language.getSelectedItem(), (String) genre.getSelectedItem(), (String) publisher.getSelectedItem(), textField1.getText()).forMyCollection(userId));
                     System.out.println(books.size());
                     for (Book book : books) {
-                        BookItem item = (BookItem) Class.forName(ItemToReturn.class.getName()).getDeclaredConstructors()[0].newInstance(book);
+                        BookItem item = (BookItem) Class.forName(ItemToReturn.class.getName()).getDeclaredConstructors()[0].newInstance(book, user1);
                         resultPanel.add(item.$$$getRootComponent$$$());
                     }
                 } catch (SQLException throwables) {
@@ -162,4 +163,5 @@ public class MyBooks {
     public JComponent $$$getRootComponent$$$() {
         return root;
     }
+
 }

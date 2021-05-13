@@ -59,7 +59,7 @@ public class MainFrame extends JFrame {
        menu.findBookButton.addActionListener(new ActionListener() {
            @Override
            public void actionPerformed(ActionEvent e) {
-               SearchForm searchForm = new SearchForm(ItemToAdd.class.getName());
+               SearchForm searchForm = new SearchForm(ItemToAdd.class.getName(),user);
                mainPanel.removeAll();
                mainPanel.add(searchForm.$$$getRootComponent$$$());
                back.setVisible(true);
@@ -69,7 +69,7 @@ public class MainFrame extends JFrame {
        menu.myBooksButton.addActionListener(new ActionListener() {
            @Override
            public void actionPerformed(ActionEvent e) {
-               MyBooks myBooks = new MyBooks(user.getId());
+               MyBooks myBooks = new MyBooks(user);
                mainPanel.removeAll();
                mainPanel.add(myBooks.$$$getRootComponent$$$());
                back.setVisible(true);

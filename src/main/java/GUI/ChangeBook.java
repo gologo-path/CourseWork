@@ -31,6 +31,7 @@ public class ChangeBook implements ICommonGuiClass {
     private JTextField location;
     private JSpinner amount;
     private JSpinner total;
+    private JButton backButton;
     private MySQLManager manager;
     private Book book;
     private ArrayList<Integer> ids_a;
@@ -130,6 +131,11 @@ public class ChangeBook implements ICommonGuiClass {
                 } catch (SQLException throwables) {
                     throwables.printStackTrace();
                 }
+                AdminMenu adminMenu = new AdminMenu();
+                container.removeAll();
+                container.add(adminMenu.$$$getRootComponent$$$());
+                container.setVisible(false);
+                container.setVisible(true);
             }
         });
         name.setText(book.getName());
@@ -161,6 +167,16 @@ public class ChangeBook implements ICommonGuiClass {
         manager = new MySQLManager();
         updateLanguages();
         updatePublishers();
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AdminMenu adminMenu = new AdminMenu();
+                container.removeAll();
+                container.add(adminMenu.$$$getRootComponent$$$());
+                container.setVisible(false);
+                container.setVisible(true);
+            }
+        });
     }
 
     private void updateLanguages() {
@@ -207,10 +223,10 @@ public class ChangeBook implements ICommonGuiClass {
      */
     private void $$$setupUI$$$() {
         root = new JPanel();
-        root.setLayout(new GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
+        root.setLayout(new GridLayoutManager(2, 2, new Insets(0, 0, 0, 0), -1, -1));
         final JPanel panel1 = new JPanel();
         panel1.setLayout(new GridLayoutManager(10, 3, new Insets(0, 0, 0, 0), -1, -1));
-        root.add(panel1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        root.add(panel1, new GridConstraints(0, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final JLabel label1 = new JLabel();
         label1.setText("Name");
         panel1.add(label1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
@@ -274,6 +290,9 @@ public class ChangeBook implements ICommonGuiClass {
         submitChangesButton = new JButton();
         submitChangesButton.setText("Submit changes");
         root.add(submitChangesButton, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        backButton = new JButton();
+        backButton.setText("Back");
+        root.add(backButton, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**

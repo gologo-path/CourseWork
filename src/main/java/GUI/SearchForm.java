@@ -6,6 +6,7 @@ import com.intellij.uiDesigner.core.Spacer;
 import database.MySQLManager;
 import database.SQLBuilder;
 import entities.Book;
+import entities.User;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,7 +27,7 @@ public class SearchForm {
     private JPanel resultPanel;
     private JComboBox publisher;
 
-    public SearchForm(final String itemName) {
+    public SearchForm(final String itemName, final User user) {
         manager = new MySQLManager();
         resultPanel.setLayout(new GridLayout(0, 1, 0, 20));
         searchButton.addActionListener(new ActionListener() {
@@ -36,7 +37,7 @@ public class SearchForm {
                 try {
                     ArrayList<Book> books = manager.getByRequest(new SQLBuilder((String) comboBox1.getSelectedItem(), (String) language.getSelectedItem(), (String) genre.getSelectedItem(), (String) publisher.getSelectedItem(), textField1.getText()).forBookCollection());
                     for (Book book : books) {
-                        BookItem item = (BookItem) Class.forName(itemName).getDeclaredConstructors()[0].newInstance(book);
+                        BookItem item = (BookItem) Class.forName(itemName).getDeclaredConstructors()[0].newInstance(book, user);
                         resultPanel.add(item.$$$getRootComponent$$$());
                     }
                 } catch (SQLException throwables) {
