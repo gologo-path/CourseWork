@@ -122,7 +122,7 @@ public class ChangeBook implements ICommonGuiClass {
                     throwables.printStackTrace();
                 }
                 try {
-                    manager.changeAmountTotal(book.getIsbn(),new HashMap<String, Integer>(){{
+                    manager.changeAmountTotal(book.getIsbn(), new HashMap<String, Integer>() {{
                         put("current_amount", (Integer) amount.getValue());
                         put("amount", (Integer) total.getValue());
                     }});
@@ -136,16 +136,16 @@ public class ChangeBook implements ICommonGuiClass {
         year.setText(book.getYear());
         location.setText(book.getLocation());
 
-        HashMap<String ,Integer> amounts = null;
+        HashMap<String, Integer> amounts = null;
         try {
             amounts = manager.getAmountTotal(book.getIsbn());
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
 
-        amountModel = new SpinnerNumberModel(amounts.get("current_amount").intValue(),0,amounts.get("amount").intValue(),1);
+        amountModel = new SpinnerNumberModel(amounts.get("current_amount").intValue(), 0, amounts.get("amount").intValue(), 1);
         amount.setModel(amountModel);
-        totalModel = new SpinnerNumberModel(amounts.get("amount").intValue(),1,Integer.MAX_VALUE,1);
+        totalModel = new SpinnerNumberModel(amounts.get("amount").intValue(), 1, Integer.MAX_VALUE, 1);
         total.setModel(totalModel);
 
         total.addChangeListener(new ChangeListener() {

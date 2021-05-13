@@ -34,6 +34,15 @@ public class User {
         this.email = email;
     }
 
+    public User(int id, String name, String surname, String fathers, String email, int isAdmin) {
+        this.name = name;
+        this.surname = surname;
+        this.id = id;
+        this.fathers = fathers;
+        this.isAdmin = isAdmin != 0;
+        this.email = email;
+    }
+
     public String getName() {
         return name;
     }

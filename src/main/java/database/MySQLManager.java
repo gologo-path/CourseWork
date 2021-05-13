@@ -722,4 +722,26 @@ public class MySQLManager {
             conn.close();
         }
     }
+    public ArrayList<User> getUsersBy(String SQL) throws SQLException {
+        Connection conn = null;
+        ArrayList<User>users = new ArrayList<User>();
+        try{
+            conn = openConnection();
+            conn.setAutoCommit(false);
+            Statement stm = conn.createStatement();
+            ResultSet rs = stm.executeQuery(SQL);
+            while(rs.next()){
+                users.add(new User(Integer.parseInt(rs.getString("id")),rs.getString("name"),
+                        rs.getString("surname"),rs.getString("fathers"),
+                        rs.getString("email"),Integer.parseInt(rs.getString("admin"))));
+            }
+            conn.commit();
+            stm.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            conn.close();
+        }
+        return users;
+    }
 }

@@ -31,19 +31,21 @@ public class ChangeInfo {
         changeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                user.setEmail(email.getText());
-                user.setName(name.getText());
-                user.setSurname(surname.getText());
-                if (!fathers.getText().isEmpty()){
-                    user.setFathers(fathers.getText());
-                }else{
-                    user.setFathers(null);
-                }
-                MySQLManager manager = new MySQLManager();
-                try {
-                    manager.changeUser(user);
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
+                if (emailValid()) {
+                    user.setEmail(email.getText());
+                    user.setName(name.getText());
+                    user.setSurname(surname.getText());
+                    if (!fathers.getText().isEmpty()) {
+                        user.setFathers(fathers.getText());
+                    } else {
+                        user.setFathers(null);
+                    }
+                    MySQLManager manager = new MySQLManager();
+                    try {
+                        manager.changeUser(user);
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
                 }
             }
         });

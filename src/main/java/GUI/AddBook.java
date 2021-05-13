@@ -124,7 +124,7 @@ public class AddBook implements ICommonGuiClass {
                 book.setLocation(location.getText());
 
                 try {
-                    manager.addAmountTotal(book.getIsbn(),new HashMap<String, Integer>(){{
+                    manager.addAmountTotal(book.getIsbn(), new HashMap<String, Integer>() {{
                         put("current_amount", (Integer) amount.getValue());
                         put("amount", (Integer) total.getValue());
                     }});
@@ -137,9 +137,9 @@ public class AddBook implements ICommonGuiClass {
         isbn.setText(book.getIsbn());
         year.setText(book.getYear());
 
-        amountModel = new SpinnerNumberModel(1,0,1,1);
+        amountModel = new SpinnerNumberModel(1, 0, 1, 1);
         amount.setModel(amountModel);
-        totalModel = new SpinnerNumberModel(1,1,Integer.MAX_VALUE,1);
+        totalModel = new SpinnerNumberModel(1, 1, Integer.MAX_VALUE, 1);
         total.setModel(totalModel);
 
         total.addChangeListener(new ChangeListener() {
@@ -269,6 +269,7 @@ public class AddBook implements ICommonGuiClass {
         location = new JTextField();
         panel2.add(location, new GridConstraints(7, 1, 1, 2, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         amount = new JSpinner();
+        amount.setBackground(new Color(-12828863));
         panel2.add(amount, new GridConstraints(8, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         total = new JSpinner();
         panel2.add(total, new GridConstraints(8, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
