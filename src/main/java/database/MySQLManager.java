@@ -744,4 +744,25 @@ public class MySQLManager {
         }
         return users;
     }
+    public HashMap<User,String> getBlackList() throws SQLException {
+        Connection conn = null;
+        HashMap<User, String >users = new HashMap<User, String>();
+        try{
+            conn = openConnection();
+            conn.setAutoCommit(false);
+            Statement stm = conn.createStatement();
+            ResultSet rs = stm.executeQuery("SELECT id_u,date_add,name,surname,fathers,email FROM blacklist INNER JOIN user ON blacklist.id_u = user.id");
+            while(rs.next()){
+                User tmp = new User(rs.getString("name"),rs.getString("surname"),rs.getString("fathers"),rs.getString("email"));
+                users.put(tmp,rs.getString("date_add"));
+            }
+            conn.commit();
+            stm.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            conn.close();
+        }
+        return users;
+    }
 }

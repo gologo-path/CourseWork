@@ -2,43 +2,26 @@ package GUI;
 
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
-import database.MySQLManager;
 import entities.User;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-public class ItemUser {
+public class BlacklistItem {
     private JPanel panel1;
     private JLabel name;
     private JLabel surname;
     private JLabel fathers;
     private JLabel email;
-    private JLabel black;
-    protected JButton changeButton;
+    private JPanel root;
+    private JLabel dateAdd;
 
-    public ItemUser(final User user, final Container container) {
+    public BlacklistItem(final User user, String date) {
         name.setText(user.getName());
         surname.setText(user.getSurname());
         fathers.setText(user.getFathers());
         email.setText(user.getEmail());
-        if (user.isInBlackList()) {
-            black.setText("Yes");
-        } else {
-            black.setText("No");
-        }
-        changeButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                ChangeInfo changeInfo = new ChangeInfo(user);
-                container.removeAll();
-                container.add(changeInfo.$$$getRootComponent$$$());
-                container.setVisible(false);
-                container.setVisible(true);
-            }
-        });
+        dateAdd.setText(date);
     }
 
     {
@@ -56,8 +39,11 @@ public class ItemUser {
      * @noinspection ALL
      */
     private void $$$setupUI$$$() {
+        root = new JPanel();
+        root.setLayout(new BorderLayout(0, 0));
         panel1 = new JPanel();
-        panel1.setLayout(new GridLayoutManager(6, 2, new Insets(0, 0, 0, 0), -1, -1));
+        panel1.setLayout(new GridLayoutManager(5, 2, new Insets(0, 0, 0, 0), -1, -1));
+        root.add(panel1, BorderLayout.CENTER);
         name = new JLabel();
         name.setText("Name");
         panel1.add(name, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
@@ -80,20 +66,18 @@ public class ItemUser {
         email.setText("");
         panel1.add(email, new GridConstraints(3, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JLabel label4 = new JLabel();
-        label4.setText("In blacklist");
+        label4.setText("Date add");
         panel1.add(label4, new GridConstraints(4, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        black = new JLabel();
-        black.setText("");
-        panel1.add(black, new GridConstraints(4, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        changeButton = new JButton();
-        changeButton.setText("Change");
-        panel1.add(changeButton, new GridConstraints(5, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        dateAdd = new JLabel();
+        dateAdd.setText("");
+        panel1.add(dateAdd, new GridConstraints(4, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**
      * @noinspection ALL
      */
     public JComponent $$$getRootComponent$$$() {
-        return panel1;
+        return root;
     }
+
 }

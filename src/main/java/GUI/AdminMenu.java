@@ -2,11 +2,16 @@ package GUI;
 
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
+import database.MySQLManager;
+import entities.User;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.reflect.Array;
+import java.sql.SQLException;
+import java.util.HashMap;
 
 public class AdminMenu {
     private JButton addBookButton;
@@ -14,6 +19,7 @@ public class AdminMenu {
     private JButton changeBookButton;
     private JButton changeUserButton;
     private JPanel root;
+    private JButton viewBlacklistButton;
 
     public AdminMenu() {
         addBookButton.addActionListener(new ActionListener() {
@@ -43,6 +49,25 @@ public class AdminMenu {
                 root.updateUI();
             }
         });
+        viewBlacklistButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JPanel black = new JPanel(new GridLayout(0, 1, 0, 20));
+                MySQLManager manager = new MySQLManager();
+                HashMap<User, String> blacks = new HashMap<User, String>();
+                try {
+                    blacks.putAll(manager.getBlackList());
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+                for (User usr : blacks.keySet()) {
+                    black.add(new BlacklistItem(usr, blacks.get(usr)).$$$getRootComponent$$$());
+                }
+                root.removeAll();
+                root.add(black);
+                root.updateUI();
+            }
+        });
     }
 
     {
@@ -63,7 +88,7 @@ public class AdminMenu {
         root = new JPanel();
         root.setLayout(new BorderLayout(0, 0));
         panel1 = new JPanel();
-        panel1.setLayout(new GridLayoutManager(3, 1, new Insets(0, 0, 0, 0), -1, -1));
+        panel1.setLayout(new GridLayoutManager(4, 1, new Insets(0, 0, 0, 0), -1, -1));
         root.add(panel1, BorderLayout.CENTER);
         addBookButton = new JButton();
         addBookButton.setText("Add book");
@@ -74,6 +99,9 @@ public class AdminMenu {
         changeUserButton = new JButton();
         changeUserButton.setText("Change user");
         panel1.add(changeUserButton, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        viewBlacklistButton = new JButton();
+        viewBlacklistButton.setText("View blacklist");
+        panel1.add(viewBlacklistButton, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**
