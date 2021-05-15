@@ -98,6 +98,7 @@ public class ChangeBook implements ICommonGuiClass {
                         throwables.printStackTrace();
                     }
                 }});
+                book.setLocation(location.getText());
                 book.setName(name.getText());
                 book.setYear(year.getText());
                 book.setPublisher(new HashMap<String, Integer>() {{
@@ -107,7 +108,6 @@ public class ChangeBook implements ICommonGuiClass {
                         throwables.printStackTrace();
                     }
                 }});
-                book.setLocation(location.getText());
                 try {
                     manager.changeBook(book, lastIsbn);
                 } catch (SQLException throwables) {

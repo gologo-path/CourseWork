@@ -586,8 +586,8 @@ public class MySQLManager {
             Statement stm = conn.createStatement();
             int rs = stm.executeUpdate("UPDATE book SET isbn = '"+book.getIsbn()+"', name = '"+book.getName()+"', " +
                     "year = "+book.getYear()+", id_publisher = "+book.getPublisher().get(book.getPublisher().keySet().iterator().next())+", " +
-                    "id_language = "+book.getLanguage().get(book.getLanguage().keySet().iterator().next())+", annotation = '"+book.getAnnotation()+"'" +
-                    "WHERE isbn = '"+lastIsbn+"'");
+                    "id_language = "+book.getLanguage().get(book.getLanguage().keySet().iterator().next())+", annotation = '"+book.getAnnotation()+"', " +
+                    "location = '"+book.getLocation()+"' "+"WHERE isbn = '"+lastIsbn+"'");
             conn.commit();
             stm.close();
         } catch (SQLException throwables) {

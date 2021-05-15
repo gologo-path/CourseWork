@@ -97,6 +97,7 @@ public class AddBook implements ICommonGuiClass {
                         throwables.printStackTrace();
                     }
                 }});
+                book.setLocation(location.getText());
                 book.setName(name.getText());
                 book.setYear(year.getText());
                 book.setPublisher(new HashMap<String, Integer>() {{
@@ -122,7 +123,7 @@ public class AddBook implements ICommonGuiClass {
                 } catch (SQLException throwables) {
                     throwables.printStackTrace();
                 }
-                book.setLocation(location.getText());
+
 
                 try {
                     manager.addAmountTotal(book.getIsbn(), new HashMap<String, Integer>() {{
