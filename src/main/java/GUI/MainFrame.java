@@ -17,8 +17,8 @@ public class MainFrame extends JFrame {
         mainPanel = new JPanel(new BorderLayout());
         mainPanel.add(menu.$$$getRootComponent$$$());
         add(mainPanel, BorderLayout.CENTER);
-        logIn.setSize(200,100);
-        setSize(500,300);
+        logIn.setSize(500,200);
+        setSize(800,500);
         //frame.setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
@@ -44,8 +44,9 @@ public class MainFrame extends JFrame {
            menu.adminStaffButton.setVisible(false);
            menu.changeProfileInfoButton.setEnabled(false);
            menu.findBookButton.setEnabled(false);
-           new BlackListDialog(this).setVisible(true);
-           // TODO: 10.05.2021 normal size of window
+           BlackListDialog b = new BlackListDialog(this);
+           b.setSize(300,200);
+           b.setVisible(true);
        }
        menu.changeProfileInfoButton.addActionListener(new ActionListener() {
            public void actionPerformed(ActionEvent e) {

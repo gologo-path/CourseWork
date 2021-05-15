@@ -33,6 +33,7 @@ public class LogIn extends JDialog {
         signUpButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 Registration r = new Registration(th);
+                r.setSize(500, 300);
                 r.setVisible(true);
             }
         });

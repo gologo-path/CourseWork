@@ -85,11 +85,15 @@ public class Registration extends JDialog {
     }
 
     private boolean passwordValid() {
-        if (String.valueOf(pass1.getPassword()).equals(String.valueOf(pass2.getPassword()))) {
-            passError.setVisible(false);
-            return true;
+        if (pass1.getPassword().length > 5) {
+            if (String.valueOf(pass1.getPassword()).equals(String.valueOf(pass2.getPassword()))) {
+                passError.setVisible(false);
+                return true;
+            } else {
+                passError.setVisible(true);
+                return false;
+            }
         } else {
-            passError.setVisible(true);
             return false;
         }
     }

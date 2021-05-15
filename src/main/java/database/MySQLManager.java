@@ -12,7 +12,8 @@ import java.util.HashMap;
 public class MySQLManager {
     private Connection openConnection(){
         String driver = "com.mysql.jdbc.Driver";
-        String connectionString = "jdbc:mysql://localhost:3306/lib?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&useSSL=false&verifyServerCertificate=false";
+        String connectionString = "jdbc:mysql://localhost:3306/lib?useUnicode=true&" +
+                "characterEncoding=UTF-8&serverTimezone=UTC&useSSL=false&verifyServerCertificate=false";
         String username = "libr";
         String password = "libr";
         try{
@@ -697,8 +698,8 @@ public class MySQLManager {
             conn = openConnection();
             conn.setAutoCommit(false);
             Statement stm = conn.createStatement();
-            int rs = stm.executeUpdate("INSERT INTO book_user (id_b,id_u,date_start,date_finish VALUES('"+isbn+"' " +
-                    id+" NOW(), DATE_ADD(NOW(),INTERVAL 10 DAY)))");
+            int rs = stm.executeUpdate("INSERT INTO book_user (id_b,id_u,date_start,date_finish) VALUES('"+isbn+"', " +
+                    id+", NOW(), DATE_ADD(NOW(),INTERVAL 10 DAY))");
             conn.commit();
             stm.close();
         } catch (SQLException throwables) {
