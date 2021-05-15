@@ -31,6 +31,7 @@ public class AddBook implements ICommonGuiClass {
     private JTextField location;
     private JSpinner amount;
     private JSpinner total;
+    private JButton backButton;
     private MySQLManager manager;
     private Book book;
     private AddAuthor addAuthor;
@@ -155,6 +156,16 @@ public class AddBook implements ICommonGuiClass {
         manager = new MySQLManager();
         updateLanguages();
         updatePublishers();
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AdminMenu mainMenu = new AdminMenu();
+                container.removeAll();
+                container.add(mainMenu.$$$getRootComponent$$$());
+                container.setVisible(false);
+                container.setVisible(true);
+            }
+        });
     }
 
     private void updateLanguages() {
@@ -207,11 +218,11 @@ public class AddBook implements ICommonGuiClass {
         root = new JPanel();
         root.setLayout(new BorderLayout(0, 0));
         final JPanel panel1 = new JPanel();
-        panel1.setLayout(new GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
+        panel1.setLayout(new GridLayoutManager(2, 2, new Insets(0, 0, 0, 0), -1, -1));
         root.add(panel1, BorderLayout.CENTER);
         final JPanel panel2 = new JPanel();
         panel2.setLayout(new GridLayoutManager(10, 3, new Insets(0, 0, 0, 0), -1, -1));
-        panel1.add(panel2, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        panel1.add(panel2, new GridConstraints(0, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final JLabel label1 = new JLabel();
         label1.setText("Name");
         panel2.add(label1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
@@ -276,6 +287,9 @@ public class AddBook implements ICommonGuiClass {
         submitChangesButton = new JButton();
         submitChangesButton.setText("Submit changes");
         panel1.add(submitChangesButton, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        backButton = new JButton();
+        backButton.setText("Back");
+        panel1.add(backButton, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**

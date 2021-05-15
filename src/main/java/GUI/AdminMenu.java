@@ -25,7 +25,7 @@ public class AdminMenu {
         addBookButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                AddBook addBook = new AddBook(AdminMenu.this.$$$getRootComponent$$$().getParent().getParent());
+                AddBook addBook = new AddBook(AdminMenu.this.$$$getRootComponent$$$());
                 root.removeAll();
                 root.add(addBook.$$$getRootComponent$$$());
                 root.updateUI();

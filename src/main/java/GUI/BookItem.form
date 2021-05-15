@@ -7,7 +7,8 @@
     </constraints>
     <properties/>
     <border type="line">
-      <color color="-13214021"/>
+      <font/>
+      <color color="-16630853"/>
     </border>
     <children>
       <grid id="3f59a" layout-manager="GridLayoutManager" row-count="9" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
