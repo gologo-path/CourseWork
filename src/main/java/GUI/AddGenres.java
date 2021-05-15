@@ -44,6 +44,7 @@ public class AddGenres {
             @Override
             public void actionPerformed(ActionEvent e) {
                 AddNewGenre addNewGenre = new AddNewGenre();
+                addNewGenre.setSize(300,200);
                 addNewGenre.cleanFields();
                 addNewGenre.setVisible(true);
             }

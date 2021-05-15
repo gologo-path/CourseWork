@@ -45,6 +45,7 @@ public class AddAuthor {
             @Override
             public void actionPerformed(ActionEvent e) {
                 AddNewAuthor addNewAuthor = new AddNewAuthor();
+                addNewAuthor.setSize(500,300);
                 addNewAuthor.cleanFields();
                 addNewAuthor.setVisible(true);
             }
