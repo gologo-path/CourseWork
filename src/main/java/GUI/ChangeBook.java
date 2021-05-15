@@ -140,7 +140,7 @@ public class ChangeBook implements ICommonGuiClass {
         });
         name.setText(book.getName());
         isbn.setText(book.getIsbn());
-        year.setText(book.getYear());
+        year.setText(book.getYear().substring(0, 4));
         location.setText(book.getLocation());
 
         HashMap<String, Integer> amounts = new HashMap<String, Integer>();
@@ -162,7 +162,7 @@ public class ChangeBook implements ICommonGuiClass {
             }
         });
 
-        // TODO: 10.05.2021 Make something with date. I don't now what, but make.
+
         annotation.setText(book.getAnnotation());
         manager = new MySQLManager();
         updateLanguages();

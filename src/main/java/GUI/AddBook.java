@@ -152,7 +152,6 @@ public class AddBook implements ICommonGuiClass {
         });
 
         location.setText(book.getLocation());
-        // TODO: 10.05.2021 Make something with date. I don't now what, but make.
         annotation.setText(book.getAnnotation());
         manager = new MySQLManager();
         updateLanguages();

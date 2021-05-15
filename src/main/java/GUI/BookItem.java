@@ -27,7 +27,7 @@ public class BookItem {
         this.book = book;
         name.setText(book.getName());
         isbn.setText(book.getIsbn());
-        year.setText(String.valueOf(book.getYear()));
+        year.setText(book.getYear().substring(0, 4));
         publisher.setText(book.getPublisher().keySet().iterator().next());
         String tmp = "";
         for (String st : book.getGenres().keySet()) {
