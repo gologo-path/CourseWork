@@ -62,7 +62,7 @@ public class AddBook implements ICommonGuiClass {
         addNewLanguage.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                addLanguage.setSize(300,200);
+                addLanguage.setSize(300, 200);
                 addLanguage.cleanFields();
                 addLanguage.setVisible(true);
                 updateLanguages();
@@ -71,7 +71,7 @@ public class AddBook implements ICommonGuiClass {
         addNewPublisher.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                addLanguage.setSize(300,200);
+                addLanguage.setSize(300, 200);
                 addPublisher.cleanFields();
                 addPublisher.setVisible(true);
                 updatePublishers();
